@@ -1,0 +1,10 @@
+%table
+  %tr
+    %th Label
+    %th Address
+    %th Balance
+  - addresses.each do |address|
+    %tr{:class => cycle('odd', 'even')}
+      %td= address.label
+      %td= link_to address.address, address_path(address)
+      %td= BITCOIN.getreceivedbyaddress(address.address)

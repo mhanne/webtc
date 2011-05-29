@@ -1,0 +1,8 @@
+%h4 Send Bitcoins
+- form_tag(transactions_path, :method => :post) do
+  = label_tag :transaction, :address
+  = text_field_tag "transaction[address]"
+  %br/
+  = label_tag :transaction, :amount
+  = text_field_tag "transaction[amount]"
+  = submit_tag "Send"

@@ -1,0 +1,21 @@
+%h3 Transaction #{@transaction["txid"]}
+
+%table
+  %tr
+    %th From
+    %td= @from ? display_address(@from) : "-"
+
+    %th To
+    %td= @to ? display_address(@to) : "-"
+  %tr
+    %th Amount
+    %td= @transaction["amount"]
+
+    %th Fee
+    %td= @transaction["fee"]
+  %tr
+    %th Time
+    %td= display_time @transaction["time"]
+
+    %th Confirmations
+    %td= @transaction["confirmations"]

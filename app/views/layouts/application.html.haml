@@ -1,0 +1,54 @@
+!!!
+%html
+  %head
+    %title WeBTC
+    = stylesheet_link_tag "webtc"
+
+  %body
+    - @info = BITCOIN.getinfo
+    #header
+      .title
+        = link_to "WeBTC", root_path
+        = @page_title ? " - #{@page_title}" : ""
+      - if current_user
+        .account
+          %span.name #{current_user.email}:
+          %span.balance #{BITCOIN.getbalance(current_user.email)} BTC
+          %br/
+          %span.address (#{BITCOIN.getaccountaddress(current_user.email)})
+
+        .user= link_to "Logout", destroy_user_session_path
+      - else
+        .user
+          = link_to "Sign In", new_user_session_path
+          = link_to "Rign Up", new_user_registration_path
+
+      - if current_user
+        %ul#navigation
+          %li{:class => controller.controller_name == "accounts" ? 'active' : ''}= link_to "Account", account_path
+          %li{:class => controller.controller_name == "transactions" ? 'active' : ''}= link_to "Transactions", transactions_path
+          %li{:class => controller.controller_name == "addresses" ? 'active' : ''}= link_to "Addresses", addresses_path
+
+    - if notice
+      #notice= notice
+    - if alert
+      #alert= alert
+    #content
+      = yield
+      - if current_user
+        #sidebar
+          .box= render :partial => "layouts/new_address"
+          .box= render :partial => "layouts/new_transaction"
+          = yield :sidebar
+
+    #footer
+      .info
+        %span.version Version: #{@info["version"]} ||
+        %span.blocks Blocks: #{@info["blocks"]} ||
+        %span.connections Connections: #{@info["connections"]} ||
+        %span.balance Balance: #{@info["balance"]} ||
+        - if @info["testnet"]
+          %span.testnet
+            %b TESTNET
+            ||
+        %span.donation= addr = WeBTC::Application.config.donation_address; link_to(addr, address_path(addr))

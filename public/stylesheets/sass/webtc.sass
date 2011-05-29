@@ -1,0 +1,102 @@
+*, html
+  padding: 0
+  margin: 0
+
+body
+  font-family: Inconsolata, monospace, sans-serif
+  font-size: 10
+
+#header
+  background: #eee
+  position: relative
+  
+  .title
+    padding: 10px
+    font-size: 30px
+    font-weight: bold
+
+    a
+      text-decoration: none
+
+  .user
+    position: absolute
+    top: 10px
+    right: 10px
+
+  .account
+    position: absolute
+    bottom: 10px
+    right: 10px
+    text-align: right
+    
+    .balance
+      font-weight: bold
+
+  #navigation
+    list-style: none
+    margin-left: 10px
+    padding-bottom: 5px
+
+    li
+      display: inline
+
+      &.active a
+        font-weight: bold
+
+a
+  color: #333
+
+#alert, #notice
+  padding-left: 10px
+#alert
+  color: red
+#notice
+  color: green
+
+#content
+  position: relative
+  margin: 10px
+  min-height: 300px
+  padding-right: 310px
+
+  #sidebar
+    position: absolute
+    top: 0px
+    right: 0px
+    width: 300px
+    background: #fff
+
+    .box
+      border: 1px solid #333
+      margin-bottom: 10px
+      padding: 5px
+
+#footer
+  margin-top: 10px
+  padding-right: 10px
+  border-top: 1px solid #333
+  text-align: right
+
+h3
+  margin: 5px
+
+fieldset
+  padding: 5px
+
+
+table
+  width: 100%
+
+  th
+    padding: 3px 5px
+    border-bottom: 1px solid #333
+
+    &.title
+      font-size: 20px
+
+  td
+    padding: 2px 4px
+    background: #fff
+
+  tr.even td
+    background: #ddd

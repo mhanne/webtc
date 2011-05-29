@@ -1,0 +1,5 @@
+%h4 Create Receiving Address
+- form_tag(addresses_path, :method => :post) do
+  = label :address, :label, "Label"
+  = text_field_tag "address[label]"
+  = submit_tag "Create"

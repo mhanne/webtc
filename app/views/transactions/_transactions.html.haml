@@ -1,0 +1,21 @@
+%table
+  %tr
+    %th Transaction ID
+    %th Type
+    %th Address
+
+    %th Amount
+    %th Confirmations
+    %th Fee
+    %th Time
+
+  - transactions.each do |transaction|
+    %tr{:class => cycle('odd', 'even')}
+      %td= display_txid transaction["txid"]
+      %td= transaction["category"]
+      %td= display_address Address.get(transaction["address"])  if transaction["address"]
+
+      %td= transaction["amount"]
+      %td= transaction["confirmations"]
+      %td= transaction["fee"]
+      %td= display_time transaction["time"]

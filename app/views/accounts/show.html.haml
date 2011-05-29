@@ -1,0 +1,22 @@
+%h3 Account
+
+Welcome to your account.
+
+%br
+%br
+
+%h3 Transactions
+
+- if @transactions.any?
+  These are your most recent transactions.
+  = render :partial => "transactions/transactions", :object => @transactions
+- else
+  You have no transactions.
+  %br
+%br
+
+%h3 Addresses
+
+These are your labeled addresses.
+
+= render :partial => "addresses/addresses", :object => @addresses
