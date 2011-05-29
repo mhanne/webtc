@@ -12,7 +12,7 @@
         = @page_title ? " - #{@page_title}" : ""
       - if current_user
         .account
-          %span.name #{current_user.email}:
+          %span.name= link_to current_user.email, edit_user_registration_path(current_user)
           %span.balance #{BITCOIN.getbalance(current_user.email)} BTC
           %br/
           %span.address (#{BITCOIN.getaccountaddress(current_user.email)})
@@ -21,7 +21,7 @@
       - else
         .user
           = link_to "Sign In", new_user_session_path
-          = link_to "Rign Up", new_user_registration_path
+          = link_to "Sign Up", new_user_registration_path
 
       - if current_user
         %ul#navigation
