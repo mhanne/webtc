@@ -1,5 +1,6 @@
-PATH
-  remote: /home/mhanne/work/ruby-bitcoin
+GIT
+  remote: git://open.sourceagency.org/ruby-bitcoin.git
+  revision: dc275da2e2f1d8b511ae5c7924738485362f8ec7
   specs:
     ruby-bitcoin (0.0.1)
       addressable

@@ -5,3 +5,4 @@ config/database.yml
 log/*.log
 public/stylesheets/*.css
 tmp/
+vendor/bundle

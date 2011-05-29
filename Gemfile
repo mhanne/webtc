@@ -4,7 +4,7 @@ gem 'rake', '0.8.7'
 gem 'rails', '3.0.7'
 gem 'haml'
 gem 'sass'
-gem 'ruby-bitcoin', :require => "bitcoin", :path => "/home/mhanne/work/ruby-bitcoin"
+gem 'ruby-bitcoin', :require => "bitcoin", :git => "git://open.sourceagency.org/ruby-bitcoin.git"
 gem 'devise'
 
 # Bundle edge Rails instead:
