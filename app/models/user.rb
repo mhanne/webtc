@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
 
   def check_address_not_changed
-    errors.add("email", :may_not_be_changed)  if email_changed?
+    errors.add("email", :may_not_be_changed)  if email_changed? && !new_record?
   end
 
 end
