@@ -6,6 +6,7 @@ gem 'haml'
 gem 'sass'
 gem 'ruby-bitcoin', :require => "bitcoin", :git => "git://open.sourceagency.org/ruby-bitcoin.git"
 gem 'devise'
+gem 'rails3-jquery-autocomplete'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

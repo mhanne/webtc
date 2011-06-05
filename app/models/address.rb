@@ -9,7 +9,7 @@ class Address < ActiveRecord::Base
   named_scope :remote, ->(user) { where(:user_id => user.id, :is_local => false) }
 
   def self.get address
-    Address.find_by_address(address) || Address.new(:address => address)
+    Address.find_by_address(address) || Address.find_by_label(address) || Address.new(:address => address)
   end
 
   def to_param

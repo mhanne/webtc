@@ -53,5 +53,11 @@ class TransactionsController < ApplicationController
     end
   end
 
+  def autocomplete_address
+    respond_to do |format|
+      format.js { render :json => Address.remote(current_user).where("label LIKE ?", "%#{params[:term]}%").map(&:label)}
+    end
+    
+  end
 
 end
