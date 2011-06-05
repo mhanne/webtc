@@ -1,10 +1,7 @@
 module ApplicationHelper
 
   def display_address address
-    account = BITCOIN.getaccount(address.address)
-    if account != "" && account != current_user.email
-      name = account
-    elsif address.label && address.label != ""
+    if address.label && address.label != ""
       name = address.label
     else
       name = address.address

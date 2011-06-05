@@ -1,7 +1,7 @@
 %h4 Send Bitcoins
 - form_tag(transactions_path, :method => :post) do
   = label_tag :transaction_address, "Address"
-  = text_field_tag "transaction[address]"
+  = text_field_tag "transaction[address]", (@address && @address.address && !@address.is_local ? @address.address : nil)
   %br/
   = label_tag :transaction_amount, "Amount"
   = text_field_tag "transaction[amount]"

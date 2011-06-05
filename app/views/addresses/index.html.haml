@@ -1,1 +1,8 @@
-= render :partial => 'addresses', :object => @addresses
+.address_table
+  %h4 Receiving Addresses
+  = render :partial => 'addresses', :object => @local_addresses
+.address_table
+  %h4 Sending Addresses
+  = render :partial => 'addresses', :object => @remote_addresses
+
+.clear{:style => "clear: both"}

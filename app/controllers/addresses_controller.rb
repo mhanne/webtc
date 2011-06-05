@@ -3,8 +3,9 @@ class AddressesController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @addresses = BITCOIN.getaddressesbyaccount(current_user.email)
-    @addresses.map! {|a| Address.get(a) }
+    @local_addresses = BITCOIN.getaddressesbyaccount(current_user.email)
+    @local_addresses.map! {|a| Address.get(a) }
+    @remote_addresses = Address.remote(current_user)
     @page_title = "List Addresses"
   end
 
@@ -16,21 +17,31 @@ class AddressesController < ApplicationController
       transaction["address"] == address
     end
     @page_title = "Show Address "
-    if @address.label
-      @page_title << "#{@address.label} (#{@address.address})"  
-    else
-      @page_title << @address.address
-    end
+    @page_title << if @address.label && @address.label != ""
+                     @address.label
+                   else
+                     @address.address
+                   end
   end
 
   def create
-    address = BITCOIN.getnewaddress(current_user.email)
-    @address = Address.new(:user => current_user, :address => address, :label => params[:address][:label])
+    if params[:address][:address]
+      @address = Address.new(:user => current_user,
+                             :address => params[:address][:address],
+                             :label => params[:address][:label],
+                             :is_local => params[:address][:is_local])
+    else
+      address = BITCOIN.getnewaddress(current_user.email)
+      @address = Address.new(:user => current_user,
+                             :address => address,
+                             :label => params[:address][:label],
+                             :is_local => params[:address][:is_local])
+    end
     if @address.save
       flash[:notice] = "Receiving address #{@address.label} created."
-      redirect_to address_path(address)
+      redirect_to address_path(@address.address)
     else
-      flash[:alert] = "Error creating Address: #{address}"
+      flash[:alert] = "Error creating Address: #{@address.errors}"
       redirect_to account_path
     end
   end

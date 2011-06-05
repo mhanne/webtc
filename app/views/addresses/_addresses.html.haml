@@ -2,9 +2,11 @@
   %tr
     %th Label
     %th Address
-    %th Balance
+    - if addresses.first.is_local
+      %th Balance
   - addresses.each do |address|
     %tr{:class => cycle('odd', 'even')}
       %td= address.label
       %td= link_to address.address, address_path(address)
-      %td= BITCOIN.getreceivedbyaddress(address.address)
+      - if address.is_local
+        %td= BITCOIN.getreceivedbyaddress(address.address)

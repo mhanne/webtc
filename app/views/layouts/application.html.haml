@@ -37,7 +37,8 @@
       = yield
       - if current_user
         #sidebar
-          .box= render :partial => "layouts/new_address"
+          .box= render :partial => "layouts/new_local_address"
+          .box= render :partial => "layouts/new_remote_address"
           .box= render :partial => "layouts/new_transaction"
           = yield :sidebar
 
