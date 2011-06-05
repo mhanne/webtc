@@ -2,7 +2,7 @@
   %tr
     %th Label
     %th Address
-    - if addresses.first.is_local
+    - if (addresses.first.is_local rescue false)
       %th Balance
   - addresses.each do |address|
     %tr{:class => cycle('odd', 'even')}
