@@ -3,7 +3,8 @@ class TransactionsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @transactions = BITCOIN.listtransactions(current_user.email, 100)
+    @limit = (params[:limit] || 10).to_i
+    @transactions = BITCOIN.listtransactions(current_user.email, @limit).reverse
     @page_title = "List Transactions"
   end
 
