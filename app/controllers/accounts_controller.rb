@@ -6,7 +6,7 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @transactions = BITCOIN.listtransactions(current_user.email, 5)
+    @transactions = BITCOIN.listtransactions(current_user.email, 5).reverse
     @balance = BITCOIN.getbalance(current_user.email)
     @addresses = BITCOIN.getaddressesbyaccount(current_user.email).map do |address|
       Address.get(address)
