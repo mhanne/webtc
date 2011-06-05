@@ -26,10 +26,15 @@ class AddressesController < ApplicationController
 
   def create
     if params[:address][:address]
-      @address = Address.new(:user => current_user,
-                             :address => params[:address][:address],
-                             :label => params[:address][:label],
-                             :is_local => params[:address][:is_local])
+      if BITCOIN.validateaddress(params[:address][:address])["isvalid"]
+        @address = Address.new(:user => current_user,
+                               :address => params[:address][:address],
+                               :label => params[:address][:label],
+                               :is_local => params[:address][:is_local])
+      else
+        flash[:alert] = "Address #{params[:address][:address]} is not valid."
+        return redirect_to account_path
+      end
     else
       address = BITCOIN.getnewaddress(current_user.email)
       @address = Address.new(:user => current_user,

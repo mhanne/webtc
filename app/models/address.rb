@@ -4,6 +4,7 @@ class Address < ActiveRecord::Base
 
   validates_presence_of :address
   validates_uniqueness_of :address, :scope => :user_id
+  validates_uniqueness_of :label, :scope => [:user_id, :is_local]
 
   named_scope :local, ->(user) { where(:user_id => user.id, :is_local => true) }
   named_scope :remote, ->(user) { where(:user_id => user.id, :is_local => false) }
