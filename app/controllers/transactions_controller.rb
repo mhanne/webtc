@@ -23,9 +23,7 @@ class TransactionsController < ApplicationController
     @address = Address.get(address)
     amount = params[:transaction][:amount].to_f
     if BITCOIN.getbalance(current_user.email) >= amount && @address
-      txid = BITCOIN.sendfrom(current_user.email, address, amount)
-      flash[:notice] = "You sent #{amount} BTC to #{@address.address}"
-      return redirect_to transaction_path(txid)
+      redirect_to check_transaction_path(:transaction => params[:transaction])
     else
       flash[:alert] = "Insufficient funds."
       return redirect_to account_path
@@ -33,6 +31,26 @@ class TransactionsController < ApplicationController
   rescue
     flash[:alert] = $!.message
     return redirect_to account_path
+  end
+
+  def check
+    @address = Address.get(params[:transaction][:address])
+    @transaction = params[:transaction]
+    @transaction[:address] = @address
+    @page_title = "Check Transaction"
+  end
+
+  def commit
+    amount = params[:transaction][:amount].to_f
+    address = params[:transaction][:address]
+    begin
+      txid = BITCOIN.sendfrom(current_user.email, address, amount)
+      flash[:notice] = "You sent #{amount} BTC to #{address}."
+      redirect_to transaction_path(txid)
+    rescue RuntimeError => e
+      flash[:alert] = "Error committing transaction: #{e.message}."
+      redirect_to account_path
+    end
   end
 
 

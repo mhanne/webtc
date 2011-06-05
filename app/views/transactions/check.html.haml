@@ -1,0 +1,5 @@
+- form_tag(commit_transaction_path(:transaction => @transaction)) do
+  Do you really want to send #{@transaction[:amount]} BTC to
+  #{display_address @transaction[:address]}?
+  = submit_tag "Commit Transaction"
+  = link_to "Cancel", account_path
