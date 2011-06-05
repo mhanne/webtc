@@ -4,8 +4,8 @@ class AddressesController < ApplicationController
 
   def index
     @local_addresses = BITCOIN.getaddressesbyaccount(current_user.email)
-    @local_addresses.map! {|a| Address.get(a) }
-    @remote_addresses = Address.remote(current_user)
+    @local_addresses.map! {|a| Address.get(a) }.sort_by!{|a| a.label || "\xff"}
+    @remote_addresses = Address.remote(current_user).sort_by!(&:label)
     @page_title = "List Addresses"
   end
 
