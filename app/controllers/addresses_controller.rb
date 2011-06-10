@@ -4,9 +4,9 @@ class AddressesController < ApplicationController
 
   def index
     @local_addresses = BITCOIN.getaddressesbyaccount(current_user.email)
-    @local_addresses.map! {|a| Address.get(a) }.sort_by!{|a| a.label || "\xff"}
+    @local_addresses.map! {|a| Address.get(a) }.select!{|a| a.is_local?}.sort_by!{|a| "#{a.label}\xff"}
     @remote_addresses = Address.remote(current_user).sort_by!(&:label)
-    @page_title = "List Addresses"
+    @page_title = t('addresses.index.title')
   end
 
   def show
@@ -16,12 +16,7 @@ class AddressesController < ApplicationController
     @transactions = BITCOIN.listtransactions(@account, 100).select do |transaction|
       transaction["address"] == address
     end
-    @page_title = "Show Address "
-    @page_title << if @address.label && @address.label != ""
-                     @address.label
-                   else
-                     @address.address
-                   end
+    @page_title = t('addresses.show.title', :address => @address.label_or_address)
   end
 
   def create
@@ -32,7 +27,7 @@ class AddressesController < ApplicationController
                                :label => params[:address][:label],
                                :is_local => params[:address][:is_local])
       else
-        flash[:alert] = "Address #{params[:address][:address]} is not valid."
+        flash[:alert] = t('addresses.create.alert_invalid_address', :address => params[:address][:address])
         return redirect_to account_path
       end
     else
@@ -43,10 +38,10 @@ class AddressesController < ApplicationController
                              :is_local => params[:address][:is_local])
     end
     if @address.save
-      flash[:notice] = "Receiving address #{@address.label} created."
+      flash[:notice] = t('addresses.create.notice', :address => @address.label_or_address)
       redirect_to address_path(@address.address)
     else
-      flash[:alert] = "Error creating Address: #{@address.errors}"
+      flash[:alert] = t('addresses.create.alert', :address => @address.address)
       redirect_to account_path
     end
   end
@@ -57,9 +52,10 @@ class AddressesController < ApplicationController
       render :action => :show
     else
       if @address.update_attribute :label, params[:address][:label]
-        flash[:notice] = "Address label changed to #{@address.label}."
+        flash[:notice] = t('addresses.update.notice', :address => @address.label)
         redirect_to address_path(@address)
       else
+        flash[:alert] = t('addresses.update.alert', :address => params[:id])
         render :action => :show
       end
     end

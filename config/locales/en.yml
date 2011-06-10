@@ -2,4 +2,94 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    models:
+
+      address:
+        label: Label
+        address: Address
+        balance: Balance
+
+      transaction:
+        id: Transaction ID
+        type: Type
+        address: Address
+        from: From
+        to: To
+        amount: Amount
+        confirmations: Confirmations
+        fee: Fee
+        time: Time
+
+  header:
+    site_name: WeBTC
+    logout: Sign Out
+    sign_in: Sign In
+    sign_up: Sign Up
+
+  sidebar:
+    title:
+      new_local_address: Create Receiving Address
+      new_remote_address: Create Sending Address
+      new_transaction: Send Bitcoins
+    button:
+      create: Create
+      update: Change
+      send: Send
+
+  accounts:
+    index:
+      title: Welcome
+      text: |-
+            This is a simple hosted <a href="http://bitcoin.org/">Bitcoin</a> wallet.
+            It is currently under heavy development, this site is for testing only.<br/>
+            Everything runs on the TEST network, so try stuff out! - you can't break anything
+            and nobody will lose money ;)
+            <br/><br/>
+            It is an open-source project; to grab the code or file a bug, head over to our
+            <a href="http://open.sourceagency.org/projects/webtc/">Redmine</a>.
+
+    show:
+      title: Account
+
+  addresses:
+    index:
+      title: Addresses
+      title_local: Receiving Addresses
+      title_remote: Sending Addresses
+    show:
+      title: Address %{address}
+      change_label: Change Address Label
+    create:
+      alert_invalid_address: "Address %{address} is not valid."
+      alert: "Error creating Address: %{address}"
+      notice: "Address %{address} created."
+    update:
+      alert: "Error updating Address: %{address}"
+      notice: "Address label changed to %{address}."
+
+  transactions:
+    index:
+      title: List Transactions
+      list_more: "Show More"
+    show:
+      title: Show Transaction
+      title_transaction: "Transaction %{transaction}"
+    check:
+      title: Check Transaction
+      text: Do you really want to send %{amount} BTC to %{address}?
+      commit: Commit Transaction
+      cancel: Cancel
+    create:
+      alert_insufficient_funds: Insufficient Funds
+    commit:
+      notice: "You sent %{amount} BTC to %{address}."
+      alert: "Error committing transaction: %{error}."
+
+  footer:
+    version: "Version: %{version}"
+    blocks: "Blocks: %{blocks}"
+    connections: "Connections: %{connections}"
+    balance: "Balance: %{balance}"
+    testnet: TESTNET
+    

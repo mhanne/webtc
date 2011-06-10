@@ -1,22 +1,12 @@
-%h3 Account
-
-Welcome to your account.
+= render :partial => "transactions/transactions", :object => @transactions
 
 %br
-%br
 
-%h3 Transactions
+.address_table
+  %h4= t('addresses.index.title_local')
+  = render :partial => 'addresses/addresses', :object => @local_addresses
+.address_table
+  %h4= t('addresses.index.title_remote')
+  = render :partial => 'addresses/addresses', :object => @remote_addresses
 
-- if @transactions.any?
-  These are your most recent transactions.
-  = render :partial => "transactions/transactions", :object => @transactions
-- else
-  You have no transactions.
-  %br
-%br
-
-%h3 Addresses
-
-These are your labeled addresses.
-
-= render :partial => "addresses/addresses", :object => @addresses
+.clear{:style => "clear: both"}

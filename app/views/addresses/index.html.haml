@@ -1,8 +1,8 @@
 .address_table
-  %h4 Receiving Addresses
+  %h4= t('.title_local')
   = render :partial => 'addresses', :object => @local_addresses
 .address_table
-  %h4 Sending Addresses
+  %h4= t('.title_remote')
   = render :partial => 'addresses', :object => @remote_addresses
 
 .clear{:style => "clear: both"}

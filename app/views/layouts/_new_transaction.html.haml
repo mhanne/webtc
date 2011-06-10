@@ -1,9 +1,9 @@
-%h4 Send Bitcoins
+%h4= t('sidebar.title.new_transaction')
 - form_tag(transactions_path, :method => :post) do
-  = label_tag :transaction_address, "Address"
+  = label_tag :transaction_address, t('activerecord.models.transaction.address')
   = autocomplete_field :transaction, :address, transaction_autocomplete_address_path,
   :value => (@address && !@address.is_local ? (@address.label && @address.label != "" ? @address.label : @address.address) : nil)
   %br/
-  = label_tag :transaction_amount, "Amount"
+  = label_tag :transaction_amount, t('activerecord.models.transaction.amount')
   = text_field_tag "transaction[amount]"
-  = submit_tag "Send"
+  = submit_tag t('sidebar.button.send')

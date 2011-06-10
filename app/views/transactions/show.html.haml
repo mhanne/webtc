@@ -1,21 +1,21 @@
-%h3 Transaction #{@transaction["txid"]}
+%h3= t('.title_transaction', :transaction => @transaction["txid"])
 
 %table
   %tr
-    %th From
+    %th= t('activerecord.models.transaction.from')
     %td= @from ? display_address(@from) : "-"
 
-    %th To
+    %th= t('activerecord.models.transaction.to')
     %td= @to ? display_address(@to) : "-"
   %tr
-    %th Amount
+    %th= t('activerecord.models.transaction.amount')
     %td= @transaction["amount"]
 
-    %th Fee
+    %th= t('activerecord.models.transaction.fee')
     %td= @transaction["fee"]
   %tr
-    %th Time
+    %th= t('activerecord.models.transaction.time')
     %td= display_time @transaction["time"]
 
-    %th Confirmations
+    %th= t('activerecord.models.transaction.confirmations')
     %td= @transaction["confirmations"]

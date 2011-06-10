@@ -1,0 +1,92 @@
+de:
+  activerecord:
+    models:
+
+      address:
+        label: Name
+        address: Adresse
+        balance: Guthaben
+
+      transaction:
+        id: Transaktionsnummer
+        type: Typ
+        address: Adresse
+        from: Absender
+        to: Empfänger
+        amount: Betrag
+        confirmations: Bestätigungen
+        fee: Gebühr
+        time: Zeit
+
+  header:
+    site_name: WeBTC
+    logout: Logout
+    sign_in: Login
+    sign_up: Registrieren
+
+  sidebar:
+    title:
+      new_local_address: Neue Empfangs-Adresse
+      new_remote_address: Neue Versand-Adresse
+      new_transaction: Bitcoins versenden
+    button:
+      create: Erstellen
+      update: Speichern
+      send: Senden
+
+  accounts:
+    index:
+      title: Willkommen
+      text: |-
+            Dies ist ein <a href="http://bitcoin.org/">Bitcoin</a> online-wallet.
+            Es befindet sich momentan in der Entwicklung und diese Seite dient nur zu Testzwecken.<br/>
+            Alles l&auml;uft im TEST-Netzwerk, also probier' Sachen aus! - Du kannst nichts kaputtmachen
+            und niemand verliert sein Geld ;) <br/>
+            <br/><br/>
+            Es ist ein Open-Source Project; um den Code herunterzuladen oder einen Fehler zu melden,
+            gehe zu unserem <a href="http://open.sourceagency.org/projects/webtc/">Redmine</a>.
+
+    show:
+      title: Account
+
+  addresses:
+    index:
+      title: Adressen
+      title_local: Empfangs-Adressen
+      title_remote: Versand-Adressen
+    show:
+      title: Adresse %{address}
+      change_label: Adress-Namen ändern
+    create:
+      alert_invalid_address: "Adresse %{address} is ungültig."
+      alert: "Fehler beim erstellen der Adresse: %{address}"
+      notice: "Adresse %{address} erstellt."
+    update:
+      alert: "Fehler beim speichern Adresse: %{address}"
+      notice: "Adress-Name geändert auf %{address}."
+
+  transactions:
+    index:
+      title: Transaktionen
+      list_more: "Mehr anzeigen"
+    show:
+      title: Transaktionsdetails
+      title_transaction: "Transaction %{transaction}"
+    check:
+      title: Transaktion überprüfen
+      text: Wirklich %{amount} BTC an %{address} senden?
+      commit: Transaktion bestätigen
+      cancel: Abbrechen
+    create:
+      alert_insufficient_funds: Guthaben reicht nicht aus.
+    commit:
+      notice: "%{amount} BTC an %{address} gesendet."
+      alert: "Fehler: %{error}."
+
+  footer:
+    version: "Version: %{version}"
+    blocks: "Blöcke: %{blocks}"
+    connections: "Verbindungen: %{connections}"
+    balance: "Guthaben: %{balance}"
+    testnet: TESTNET
+    

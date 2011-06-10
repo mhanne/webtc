@@ -1,9 +1,9 @@
 %table
   %tr
-    %th Label
-    %th Address
+    %th= t('activerecord.models.address.label')
+    %th= t('activerecord.models.address.address')
     - if (addresses.first.is_local rescue false)
-      %th Balance
+      %th= t('activerecord.models.address.balance')
   - addresses.each do |address|
     %tr{:class => cycle('odd', 'even')}
       %td= address.label

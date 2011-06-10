@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title WeBTC
+    %title= t 'header.site_name'
     = javascript_include_tag "jquery.js", "jquery.ui.js", "rails.js", "autocomplete-rails.js"
     = stylesheet_link_tag "webtc", "autocomplete"
 
@@ -9,7 +9,7 @@
     - @info = BITCOIN.getinfo
     #header
       .title
-        = link_to "WeBTC", root_path
+        = link_to t('header.site_name'), root_path
         = @page_title ? " - #{@page_title}" : ""
       - if current_user
         .account
@@ -18,17 +18,20 @@
           %br/
           %span.address (#{BITCOIN.getaccountaddress(current_user.email)})
 
-        .user= link_to "Logout", destroy_user_session_path
+        .user= link_to t('header.logout'), destroy_user_session_path
       - else
         .user
-          = link_to "Sign In", new_user_session_path
-          = link_to "Sign Up", new_user_registration_path
+          = link_to t('header.sign_in'), new_user_session_path
+          = link_to t('header.sign_up'), new_user_registration_path
 
       - if current_user
         %ul#navigation
-          %li{:class => controller.controller_name == "accounts" ? 'active' : ''}= link_to "Account", account_path
-          %li{:class => controller.controller_name == "transactions" ? 'active' : ''}= link_to "Transactions", transactions_path
-          %li{:class => controller.controller_name == "addresses" ? 'active' : ''}= link_to "Addresses", addresses_path
+          %li{:class => controller.controller_name == "accounts" ? 'active' : ''}
+            = link_to t('navigation.account'), account_path
+          %li{:class => controller.controller_name == "transactions" ? 'active' : ''}
+            = link_to t('navigation.transactions'), transactions_path
+          %li{:class => controller.controller_name == "addresses" ? 'active' : ''}
+            = link_to t('navigation.addresses'), addresses_path
 
     - if notice
       #notice= notice
@@ -45,10 +48,10 @@
 
     #footer
       .info
-        %span.version Version: #{@info["version"]} ||
-        %span.blocks Blocks: #{@info["blocks"]} ||
-        %span.connections Connections: #{@info["connections"]} ||
-        %span.balance Balance: #{@info["balance"]} ||
+        %span.version #{t('footer.version', :version => @info["version"])} ||
+        %span.blocks #{t('footer.blocks', :blocks => @info["blocks"])} ||
+        %span.connections #{t('footer.connections', :connections => @info["connections"])} ||
+        %span.balance #{t('footer.balance', :balance => @info["balance"])} ||
         - if @info["testnet"]
           %span.testnet
             %b TESTNET

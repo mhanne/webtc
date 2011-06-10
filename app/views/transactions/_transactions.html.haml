@@ -1,13 +1,13 @@
 %table
   %tr
-    %th Transaction ID
-    %th Type
-    %th Address
+    %th= t('activerecord.models.transaction.id')
+    %th= t('activerecord.models.transaction.type')
+    %th= t('activerecord.models.transaction.address')
 
-    %th Amount
-    %th Confirmations
-    %th Fee
-    %th Time
+    %th= t('activerecord.models.transaction.amount')
+    %th= t('activerecord.models.transaction.confirmations')
+    %th= t('activerecord.models.transaction.fee')
+    %th= t('activerecord.models.transaction.time')
 
   - transactions.each do |transaction|
     %tr{:class => cycle('odd', 'even')}

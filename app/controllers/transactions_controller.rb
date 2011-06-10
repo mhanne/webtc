@@ -5,7 +5,7 @@ class TransactionsController < ApplicationController
   def index
     @limit = (params[:limit] || 10).to_i
     @transactions = BITCOIN.listtransactions(current_user.email, @limit).reverse
-    @page_title = "List Transactions"
+    @page_title = t('transactions.index.title')
   end
 
   def show
@@ -15,7 +15,7 @@ class TransactionsController < ApplicationController
     end
     @from = Address.get(@transaction["details"].find{|d| d["category"] == "send" }["address"]) rescue nil
     @to = Address.get(@transaction["details"].find{|d| d["category"] == "receive" }["address"]) rescue nil
-    @page_title = "Show Transaction"
+    @page_title = t('transactions.show.title')
   end
 
   def create
@@ -25,7 +25,7 @@ class TransactionsController < ApplicationController
     if BITCOIN.getbalance(current_user.email) >= amount && @address
       redirect_to check_transaction_path(:transaction => params[:transaction])
     else
-      flash[:alert] = "Insufficient funds."
+      flash[:alert] = t('transactions.create.alert_insufficient_funds')
       return redirect_to account_path
     end
   rescue
@@ -37,7 +37,7 @@ class TransactionsController < ApplicationController
     @address = Address.get(params[:transaction][:address])
     @transaction = params[:transaction]
     @transaction[:address] = @address
-    @page_title = "Check Transaction"
+    @page_title = t('transactions.check.title')
   end
 
   def commit
@@ -45,10 +45,10 @@ class TransactionsController < ApplicationController
     address = params[:transaction][:address]
     begin
       txid = BITCOIN.sendfrom(current_user.email, address, amount)
-      flash[:notice] = "You sent #{amount} BTC to #{address}."
+      flash[:notice] = t('transactions.commit.notice', :amount => amount, :address => address)
       redirect_to transaction_path(txid)
     rescue RuntimeError => e
-      flash[:alert] = "Error committing transaction: #{e.message}."
+      flash[:alert] = t('transactions.commit.alert', :error => e.message)
       redirect_to account_path
     end
   end
