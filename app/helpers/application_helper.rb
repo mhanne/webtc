@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def display_amount amount
-    unit = current_user.setting("units") rescue User::DEFAULT_SETTINGS[:unit]
+    unit = current_user.setting("units") rescue User::DEFAULT_SETTINGS[:units]
     amount = amount.to_f * User::UNITS[unit]
     language = current_user.setting(:language) rescue User::DEFAULT_SETTINGS[:language]
     case language

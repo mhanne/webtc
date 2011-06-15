@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   DEFAULT_SETTINGS = {
     :language => "en",
-    :unit => "BTC",
+    :units => "BTC",
   }
 
   LANGUAGES = [
