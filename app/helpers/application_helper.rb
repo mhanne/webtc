@@ -1,11 +1,10 @@
 module ApplicationHelper
 
   def display_amount amount
-
-    unit = current_user.setting("units")
+    unit = current_user.setting("units") rescue User::DEFAULT_SETTINGS[:unit]
     amount = amount.to_f * User::UNITS[unit]
-    
-    case current_user.setting(:language)
+    language = current_user.setting(:language) rescue User::DEFAULT_SETTINGS[:language]
+    case language
     when "de"
       separator = ','; delimiter = '.'
     else
@@ -13,9 +12,8 @@ module ApplicationHelper
     end
     precision = (unit == 'satoshi') ? 0 : 2
     number_to_currency(amount, :precision => precision,
-                       :unit => "", :locale => current_user.setting(:locale),
+                       :unit => "", :locale => language,
                        :separator => separator, :delimiter => delimiter)
-    
   end
 
   def display_address address
