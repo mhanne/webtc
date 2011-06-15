@@ -52,6 +52,14 @@ en:
     show:
       title: Account
 
+    settings:
+      title: Account Settings
+      language: Language
+      units: Units
+      save: Save
+      notice: Account settings changed.
+      alert: Error changing account settings.
+
   addresses:
     index:
       title: Addresses

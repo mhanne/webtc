@@ -17,4 +17,20 @@ class AccountsController < ApplicationController
     @page_title = t('accounts.show.title')
   end
 
+  def settings
+    @settings = current_user.settings
+    @page_title = t('accounts.settings.title')
+  end
+  
+  def update_settings
+    user = current_user
+    user.settings = params[:settings]
+    if user.save
+      flash[:notice] = "HAAA"#t('accounts.settings.notice')
+    else
+      flash[:alert] = t('accounts.settings.alert')
+    end
+    redirect_to :action => :settings
+  end
+
 end

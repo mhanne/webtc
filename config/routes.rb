@@ -2,7 +2,9 @@ WeBTC::Application.routes.draw do
 
   devise_for :users
 
-  match 'accounts/show' => 'accounts#show', :as => :account
+  match 'account' => 'accounts#show', :as => :account
+  match 'account/settings' => 'accounts#settings', :as => :account_settings
+  match 'account/settings/update' => 'accounts#update_settings', :as => :account_update_settings
   resources :accounts
   resources :addresses
   get 'transactions/autocomplete_address' => 'transactions#autocomplete_address', :as => :transaction_autocomplete_address

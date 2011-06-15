@@ -49,6 +49,14 @@ de:
     show:
       title: Account
 
+    settings:
+      title: Einstellungen
+      language: Sprache
+      units: Einheiten
+      save: Speichern
+      notice: Einstellungen gespeichert.
+      alert: Fehler beim speichern der Einstellungen.
+
   addresses:
     index:
       title: Adressen

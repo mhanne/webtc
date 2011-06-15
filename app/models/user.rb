@@ -2,6 +2,23 @@ class User < ActiveRecord::Base
 
   has_many :addresses
 
+  DEFAULT_SETTINGS = {
+    :language => "en",
+    :unit => "btc",
+  }
+
+  LANGUAGES = [
+               ["English", "en"],
+               ["German", "de"],
+              ]
+
+  UNITS = {
+           "BTC"  => 1,
+           "mBTC" => 1000,
+           "uBTC" => 1000000,
+          }
+
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -13,6 +30,8 @@ class User < ActiveRecord::Base
   before_create :check_bitcoin_account
   after_create :create_bitcoin_address
   before_update :check_address_not_changed
+
+  serialize :settings, Hash
 
   def check_bitcoin_account
     if BITCOIN.getaddressesbyaccount(email).size > 0
@@ -29,6 +48,14 @@ class User < ActiveRecord::Base
 
   def check_address_not_changed
     errors.add("email", :may_not_be_changed)  if email_changed? && email_change[0] != ""
+  end
+
+  def setting(setting)
+    if settings && settings[setting.to_sym]
+      settings[setting.to_sym]
+    else
+      DEFAULT_SETTINGS[setting.to_sym]
+    end
   end
 
 end
