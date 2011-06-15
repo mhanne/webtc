@@ -22,7 +22,8 @@ class TransactionsController < ApplicationController
     address = params[:transaction][:address]
     @address = Address.get(address)
     amount = params[:transaction][:amount].to_f
-    if BITCOIN.getbalance(current_user.email) >= amount && @address
+    factor = User::UNITS[current_user.setting(:units)]
+    if BITCOIN.getbalance(current_user.email) >= (amount / factor) && @address
       redirect_to check_transaction_path(:transaction => params[:transaction])
     else
       flash[:alert] = t('transactions.create.alert_insufficient_funds')
@@ -42,8 +43,7 @@ class TransactionsController < ApplicationController
 
   def commit
     begin
-      unit = params[:unit]
-      factor = User::UNITS[unit]
+      factor = User::UNITS[current_user.setting(:units)]
       amount = params[:transaction][:amount].to_f / factor
       address = params[:transaction][:address]
       txid = BITCOIN.sendfrom(current_user.email, address, amount)
