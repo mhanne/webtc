@@ -9,4 +9,4 @@
       %td= address.label
       %td= link_to address.address, address_path(address)
       - if address.is_local
-        %td= BITCOIN.getreceivedbyaddress(address.address)
+        %td.amount= display_amount(BITCOIN.getreceivedbyaddress(address.address))

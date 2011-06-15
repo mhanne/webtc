@@ -14,7 +14,7 @@
       - if current_user
         .account
           %span.name= link_to current_user.email, edit_user_registration_path(current_user)
-          %span.balance #{BITCOIN.getbalance(current_user.email)} BTC
+          %span.balance #{display_amount(BITCOIN.getbalance(current_user.email))} #{current_user.setting(:units)}
           %br/
           %span.address (#{BITCOIN.getaccountaddress(current_user.email)})
 
@@ -26,12 +26,14 @@
 
       - if current_user
         %ul#navigation
-          %li{:class => controller.controller_name == "accounts" ? 'active' : ''}
+          %li{:class => (controller.controller_name == "accounts" && params[:action] != 'settings') ? 'active' : ''}
             = link_to t('navigation.account'), account_path
           %li{:class => controller.controller_name == "transactions" ? 'active' : ''}
             = link_to t('navigation.transactions'), transactions_path
           %li{:class => controller.controller_name == "addresses" ? 'active' : ''}
             = link_to t('navigation.addresses'), addresses_path
+          %li{:class => (controller.controller_name == "accounts" && params[:action] == 'settings') ? 'active' : ''}
+            = link_to t('navigation.settings'), account_settings_path
 
     - if notice
       #notice= notice
@@ -51,7 +53,7 @@
         %span.version #{t('footer.version', :version => @info["version"])} ||
         %span.blocks #{t('footer.blocks', :blocks => @info["blocks"])} ||
         %span.connections #{t('footer.connections', :connections => @info["connections"])} ||
-        %span.balance #{t('footer.balance', :balance => @info["balance"])} ||
+        %span.balance #{t('footer.balance', :balance => display_amount(@info["balance"]))} ||
         - if @info["testnet"]
           %span.testnet
             %b TESTNET

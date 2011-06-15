@@ -3,12 +3,10 @@
   %table
     %tr
       %th= t('accounts.settings.language')
-      %td= select_tag "settings[language]", options_for_select(User::LANGUAGES),
-      :value => current_user.setting(:language)
+      %td= select_tag "settings[language]", options_for_select(User::LANGUAGES, current_user.setting(:language))
     %tr
       %th= t('accounts.settings.units')
-      %td= select_tag "settings[units]", options_for_select(User::UNITS.keys.map{|u| [u, u]}),
-      :value => current_user.setting(:units)
+      %td= select_tag "settings[units]", options_for_select(User::UNITS.keys.map{|u| [u, u]}, current_user.setting(:units))
     %tr
       %th
       %td= submit_tag t('accounts.settings.save')

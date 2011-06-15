@@ -4,19 +4,20 @@ class User < ActiveRecord::Base
 
   DEFAULT_SETTINGS = {
     :language => "en",
-    :unit => "btc",
+    :unit => "BTC",
   }
 
   LANGUAGES = [
                ["English", "en"],
                ["German", "de"],
               ]
-
+  
   UNITS = {
-           "BTC"  => 1,
-           "mBTC" => 1000,
-           "uBTC" => 1000000,
-          }
+    "BTC"  => 1,
+    "mBTC" => 1_000,
+    "uBTC" => 1_000_000,
+    "satoshi" => 100_000_000,
+  }
 
 
   # Include default devise modules. Others available are:

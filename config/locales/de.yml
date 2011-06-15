@@ -82,7 +82,7 @@ de:
       title_transaction: "Transaction %{transaction}"
     check:
       title: Transaktion überprüfen
-      text: Wirklich %{amount} BTC an %{address} senden?
+      text: Wirklich %{amount} %{unit} an %{address} senden?
       commit: Transaktion bestätigen
       cancel: Abbrechen
     create:

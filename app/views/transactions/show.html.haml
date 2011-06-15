@@ -9,10 +9,10 @@
     %td= @to ? display_address(@to) : "-"
   %tr
     %th= t('activerecord.models.transaction.amount')
-    %td= @transaction["amount"]
+    %td= display_amount(@transaction["amount"])
 
     %th= t('activerecord.models.transaction.fee')
-    %td= @transaction["fee"]
+    %td= display_amount(@transaction["fee"])
   %tr
     %th= t('activerecord.models.transaction.time')
     %td= display_time @transaction["time"]

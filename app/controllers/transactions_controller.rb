@@ -41,9 +41,11 @@ class TransactionsController < ApplicationController
   end
 
   def commit
-    amount = params[:transaction][:amount].to_f
-    address = params[:transaction][:address]
     begin
+      unit = params[:unit]
+      factor = User::UNITS[unit]
+      amount = params[:transaction][:amount].to_f / factor
+      address = params[:transaction][:address]
       txid = BITCOIN.sendfrom(current_user.email, address, amount)
       flash[:notice] = t('transactions.commit.notice', :amount => amount, :address => address)
       redirect_to transaction_path(txid)

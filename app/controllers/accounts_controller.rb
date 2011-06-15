@@ -26,7 +26,7 @@ class AccountsController < ApplicationController
     user = current_user
     user.settings = params[:settings]
     if user.save
-      flash[:notice] = "HAAA"#t('accounts.settings.notice')
+      flash[:notice] = t('accounts.settings.notice')
     else
       flash[:alert] = t('accounts.settings.alert')
     end
