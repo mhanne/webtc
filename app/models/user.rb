@@ -52,8 +52,8 @@ class User < ActiveRecord::Base
   end
 
   def setting(setting)
-    if settings && settings[setting.to_sym]
-      settings[setting.to_sym]
+    if settings && settings[setting.to_s]
+      settings[setting.to_s]
     else
       DEFAULT_SETTINGS[setting.to_sym]
     end
