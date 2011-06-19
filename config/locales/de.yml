@@ -24,6 +24,12 @@ de:
     sign_in: Login
     sign_up: Registrieren
 
+  navigation:
+    account: Account
+    transactions: Transaktionen
+    addresses: Adressen
+    settings: Einstellungen
+
   sidebar:
     title:
       new_local_address: Neue Empfangs-Adresse

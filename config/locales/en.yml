@@ -27,6 +27,13 @@ en:
     sign_in: Sign In
     sign_up: Sign Up
 
+  navigation:
+    account: Account
+    transactions: Transactions
+    addresses: Addresses
+    settings: Settings
+
+
   sidebar:
     title:
       new_local_address: Create Receiving Address
