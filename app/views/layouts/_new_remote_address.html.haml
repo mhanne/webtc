@@ -1,5 +1,5 @@
 %h4= t('sidebar.title.new_remote_address')
-- form_tag(addresses_path, :method => :post) do
+= form_tag(addresses_path, :method => :post) do
   = hidden_field_tag "address[is_local]", "false"
   = label :address, :label, t('activerecord.models.address.label')
   = text_field_tag "address[label]"

@@ -4,7 +4,7 @@
   - content_for :sidebar do
     .box
       %h4= t('.change_label')
-      - form_for(@address) do |f|
+      = form_for(@address) do |f|
         - if @account == current_user.email
           = f.hidden_field :is_local, {:value => "true"}
         - else
