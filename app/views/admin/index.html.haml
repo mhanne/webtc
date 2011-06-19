@@ -1,0 +1,20 @@
+%table
+  %tr
+    %th= t('admin.user.account')
+    %th= t('admin.user.logins')
+    %th= t('admin.user.last_login')
+    %th= t('admin.user.ip')
+    %th= t('admin.user.addresses')
+    %th= t('admin.user.balance')
+  - @users.each do |user|
+    %tr
+      %td= link_to user.email, admin_user_path(user)
+      %td= user.sign_in_count
+      %td= user.current_sign_in_at || user.last_sign_in_at
+      %td= user.current_sign_in_ip || user.last_sign_in_ip
+      %td= user.addresses.count
+      %td.amount= display_amount BITCOIN.getbalance(user.email)
+    %tr
+      %td{:colspan => 3}
+        %table
+          /= render :partial => "addresses/addresses", :object => user.addresses

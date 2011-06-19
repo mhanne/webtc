@@ -34,6 +34,9 @@
             = link_to t('navigation.addresses'), addresses_path
           %li{:class => (controller.controller_name == "accounts" && params[:action] == 'settings') ? 'active' : ''}
             = link_to t('navigation.settings'), account_settings_path
+          - if current_user.is_admin?
+            %li{:class => (controller.controller_name == "admin" ? 'active' : '')}
+              = link_to t('navigation.admin'), admin_path
 
     - if notice
       #notice= notice

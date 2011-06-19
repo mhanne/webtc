@@ -1,0 +1,16 @@
+#{t('admin.user.account')}: #{@user.email}
+%br/
+#{t('admin.user.last_login')}: #{@user.current_sign_in_at || @user.last_sign_in_at}
+%br/
+#{t('admin.user.ip')}: #{@user.current_sign_in_ip || @user.last_sign_in_ip}
+%br/
+#{t('admin.user.balance')}: #{BITCOIN.getbalance(@user.email)}
+%br/
+
+.address_table
+  %h3= t('admin.user.local_addresses')
+  = render :partial => "addresses/addresses", :object => Address.local(@user)
+
+.address_table
+  %h3= t('admin.user.remote_addresses')
+  = render :partial => "addresses/addresses", :object => Address.remote(@user)

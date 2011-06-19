@@ -29,6 +29,7 @@ de:
     transactions: Transaktionen
     addresses: Adressen
     settings: Einstellungen
+    admin: Admin
 
   sidebar:
     title:
@@ -97,6 +98,21 @@ de:
     commit:
       notice: "%{amount} BTC an %{address} gesendet."
       alert: "Fehler: %{error}."
+
+  admin:
+    index:
+      title: Admin
+    show:
+      title: Benutzer %{email}
+    user:
+      account: Account
+      logins: Logins
+      last_login: Letzter Login
+      ip: IP
+      addresses: Adressen
+      balance: Guthaben
+      local_addresses: Empfangs-Adressen
+      remote_addresses: Sende-Adressen
 
   footer:
     version: "Version: %{version}"

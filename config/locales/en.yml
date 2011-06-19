@@ -32,7 +32,7 @@ en:
     transactions: Transactions
     addresses: Addresses
     settings: Settings
-
+    admin: Admin
 
   sidebar:
     title:
@@ -100,6 +100,22 @@ en:
     commit:
       notice: "You sent %{amount} BTC to %{address}."
       alert: "Error committing transaction: %{error}."
+
+  admin:
+    index:
+      title: Admin
+    show:
+      title: User %{email}
+    user:
+      account: Account
+      logins: Logins
+      last_login: Last login
+      ip: IP
+      addresses: Addresses
+      balance: Balance
+      local_addresses: Local Addresses
+      remote_addresses: Remote Addresses
+
 
   footer:
     version: "Version: %{version}"
