@@ -85,7 +85,7 @@ en:
       title_transaction: "Transaction %{transaction}"
     check:
       title: Check Transaction
-      text: Do you really want to send %{amount} %{unit} to %{address}?
+      text: "Do you really want to send %{unit} %{amount} (in words: %{in_words}) to %{address}?"
       commit: Commit Transaction
       cancel: Cancel
     create:

@@ -38,13 +38,15 @@ class TransactionsController < ApplicationController
     @address = Address.get(params[:transaction][:address])
     @transaction = params[:transaction]
     @transaction[:address] = @address
+    @factor = User::UNITS[current_user.setting(:units)]
+    amount = @transaction[:amount].gsub(',', '.').to_f / @factor
+    @transaction[:amount] = amount
     @page_title = t('transactions.check.title')
   end
 
   def commit
     begin
-      factor = User::UNITS[current_user.setting(:units)]
-      amount = params[:transaction][:amount].to_f / factor
+      amount = params[:transaction][:amount].to_f
       address = params[:transaction][:address]
       txid = BITCOIN.sendfrom(current_user.email, address, amount)
       flash[:notice] = t('transactions.commit.notice', :amount => amount, :address => address)

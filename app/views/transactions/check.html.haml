@@ -1,6 +1,10 @@
 = form_tag(commit_transaction_path(:transaction => @transaction)) do
   = hidden_field_tag :unit, current_user.setting(:units)
-  = t('.text', :amount => @transaction[:amount], :unit => current_user.setting(:units), :address => display_address(@transaction[:address])).html_safe
+  = t('.text', :amount => display_amount(@transaction[:amount]),
+    :in_words => amount_in_words(@transaction[:amount] * @factor),
+    :unit => current_user.setting(:units),
+    :address => display_address(@transaction[:address])).html_safe
+
   = submit_tag t('.commit'), :id => "commit_transaction"
   = link_to t('.cancel'), account_path
 
