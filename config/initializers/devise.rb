@@ -192,3 +192,5 @@ Devise.setup do |config|
   #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
   # end
 end
+
+require File.join(Rails.root, "app", "controllers", "sessions_controller")

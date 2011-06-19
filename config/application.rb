@@ -43,6 +43,14 @@ module WeBTC
 
     config.donation_address = "mv5di1FgGEtnStni3KfDW5uwyneaaF7RQD"
 
+    config.gpg = {
+      :home => File.join(Rails.root, ".gpg"),
+      :key_type => "DSA",
+      :key_size => 1024,
+      :subkey_type => "ELG-E",
+      :subkey_size => 1024,
+    }
+
   end
 end
 

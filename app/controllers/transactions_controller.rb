@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :check_bitcoin_keys
 
   def index
     @limit = (params[:limit] || 10).to_i

@@ -1,6 +1,6 @@
 class AddressesController < ApplicationController
 
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :check_bitcoin_keys
 
   def index
     @local_addresses = BITCOIN.getaddressesbyaccount(current_user.email)

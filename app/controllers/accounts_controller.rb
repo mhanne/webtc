@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
 
-  before_filter :authenticate_user!, :except => :index
+  before_filter :authenticate_user!, :check_bitcoin_keys, :except => :index
 
   def index
     redirect_to :action => :show  if current_user

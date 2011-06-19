@@ -21,4 +21,27 @@ class Address < ActiveRecord::Base
     address
   end
 
+
+  def unload
+    privkey = BITCOIN.dumpprivkey(address)
+    encrypted = GPGME.encrypt([user.email], privkey, :armor => true)
+    update_attribute :key, encrypted
+    BITCOIN.removeprivkey(address)
+  rescue
+    false
+  end
+
+  def load(password)
+    privkey = GPGME.decrypt(key, :passphrase_callback => ->(*args) {
+      system('stty -echo')
+      io = IO.for_fd(args.last, 'w')
+      io.puts(Digest::SHA1.hexdigest("webtc-#{user.email}-#{password}"))
+      io.flush
+      system('stty echo')
+    })
+    BITCOIN.importprivkey(privkey, user.email)
+  rescue
+    false
+  end
+
 end

@@ -9,6 +9,7 @@ bitcoind RPC API.
 * ruby 1.9
 * rails 3
 * database (ActiveRecord compatible; sqlite3, mysql, pgsql)
+* GPG and GPGME
 
 == Features
 
@@ -17,6 +18,21 @@ bitcoind RPC API.
 * label addresses
 * send transactions (autocomplete labels)
 * (of course it also receives transactions, but bitcoind does that for us :)
+* key encryption (see below)
+
+== Key encryption
+
+Every user has a GPG key secured with his account password.
+When a user signs out, all his bitcoin private keys are encrypted to this GPG key
+and then removed from bitcoind.
+When the user signs in again, he gives his password, the keys are decrypted and
+loaded into bitcoind.
+This way an attacker who compromised the server only has access to the currently
+logged in users' money.
+
+For this to work, you need a bitcoind that supports dumping, loading and removing
+private keys. For the time being you have to use the 'showwallet' and 'removeprivkey'
+branches from my git repo (git://github.com/mhanne/bitcoin.git).
 
 == Setup
 
@@ -25,6 +41,7 @@ Install development libraries for your database.
 Run `bundle install` to install all ruby libraries.
 Run `rake db:migrate` to setup the database.
 Edit config/application.rb and configure your bitcoind connection.
+Create .gpg/ folder with chmod 700
 Run `rails s` to start the webserver.
 Open your browser at http://localhost:3000/
 

@@ -7,4 +7,11 @@ class ApplicationController < ActionController::Base
     I18n.locale = current_user.setting(:language)  if current_user
   end
 
+  def check_bitcoin_keys
+    if !current_user || !current_user.keys_loaded?
+      sign_out
+      return redirect_to new_user_session_path
+    end
+  end
+
 end

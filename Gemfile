@@ -8,6 +8,8 @@ gem 'ruby-bitcoin', :require => "bitcoin", :git => "git://open.sourceagency.org/
 gem 'devise'
 gem 'rails3-jquery-autocomplete'
 
+gem 'gpgme'
+
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
