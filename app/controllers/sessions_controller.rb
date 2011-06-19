@@ -14,6 +14,13 @@ class Devise::SessionsController < ApplicationController
     resource = warden.authenticate!(:scope => resource_name, :recall => "#{controller_path}#new")
     set_flash_message(:notice, :signed_in) if is_navigational_format?
     sign_in(resource_name, resource)
+
+    # temporary fix to add key to old user accounts on first login
+    unless resource.get_gpg_ctx.keys(resource.email).any?
+      resource.password = params[:user][:password]
+      resource.create_gpg_key
+    end
+
     resource.load_keys(params[:user][:password])
     respond_with resource, :location => redirect_location(resource_name, resource)
   end
