@@ -40,8 +40,39 @@ de:
       create: Erstellen
       update: Speichern
       send: Senden
+      
+
 
   accounts:
+    user:
+      email: E-Mail
+      password: Passwort
+      password_confirmation: Passwort (wdh.)
+      remember_me: "Eingeloggt bleiben?"
+      current_password: Aktuelles Passwort
+
+    sign_up:
+      title: Registrieren
+      button: Registrieren
+      help:
+        email: Ihre E-Mail Adresse
+        password: |-
+                  ACHTUNG! Da wir Ihr Passwort nicht speichern und Ihre privaten Bitcoin-Schlüssel damit gesichert sind,<br/>
+                  können wir das Passwort NICHT zurücksetzen!!! <span style="color: red">Vergessen Sie Ihr Passwort Nicht!</span>
+        password_confirmation: Wiederholung des Passworts zur Vermeidung von Tippfehlern
+
+    sign_in:
+      title: Login
+      button: Login
+
+    edit:
+      title: Account bearbeiten
+      help:
+        email: Email Adresse kann nicht geändert werden
+        password: Leer lassen wenn Sie das Passwort nicht ändern wollen
+        password_confirmation: ""
+        current_password: Wir benötigen Ihr aktuelles Passwort um die Änderung zu bestätigen
+
     index:
       title: Willkommen
       text: |-

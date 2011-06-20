@@ -1,0 +1,21 @@
+- @page_title = t('accounts.sign_in.title')
+
+= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f|
+  %table.form
+    %tr
+      %th= f.label :email, t('accounts.user.email')
+      %td= f.email_field :email
+
+    %tr
+      %th= f.label :password, t('accounts.user.password')
+      %td= f.password_field :password
+
+    - if devise_mapping.rememberable?
+      %tr
+        %th= f.label :remember_me, t('accounts.user.remember_me')
+        %td= f.check_box :remember_me
+
+  
+    %tr
+      %th
+      %td= f.submit t('accounts.sign_in.button')

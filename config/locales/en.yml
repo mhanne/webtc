@@ -45,6 +45,38 @@ en:
       send: Send
 
   accounts:
+
+    user:
+      email: E-Mail
+      password: Password
+      password_confirmation: Password (again)
+      remember_me: Remember me?
+      current_password: Current Password
+
+    sign_up:
+      title: Sign Up
+      button: Sign Up
+      help:
+        email: Your email address
+        password: |-
+                  WARNING! As we don't save your Password and your private Bitcoin keys are secured with it,<br/>
+                  we can NOT reset your password!!!
+                  <span style="color: red">DO NOT FORGET YOUR PASSWORD!</span>
+        password_confirmation: Password confirmation to avoid typos
+
+    sign_in:
+      title: Sign In
+      button: Sign In
+
+    edit:
+      title: Edit Account
+
+      help:
+        email: Email address can not be changed
+        password: Leave blank if you don't want to change it
+        password_confirmation: ""
+        current_password: We need your current password to confirm your changes
+
     index:
       title: Welcome
       text: |-
