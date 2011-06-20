@@ -5,6 +5,7 @@ WeBTC::Application.routes.draw do
   match 'admin' => 'admin#index', :as => :admin
   match 'admin/:id' => 'admin#show', :as => :admin_user
 
+  match 'locale/:id' => 'accounts#locale', :as => :locale
   match 'account' => 'accounts#show', :as => :account
   match 'account/settings' => 'accounts#settings', :as => :account_settings
   match 'account/settings/update' => 'accounts#update_settings', :as => :account_update_settings

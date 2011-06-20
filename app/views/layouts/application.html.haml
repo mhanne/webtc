@@ -61,4 +61,10 @@
           %span.testnet
             %b TESTNET
             ||
-        %span.donation= addr = WeBTC::Application.config.donation_address; link_to(addr, address_path(addr))
+        %span.donation= addr = WeBTC::Application.config.donation_address; link_to(addr, address_path(addr)) 
+        ||
+        %span#locale
+          - {:en => "us", :de => "de"}.each do |locale, image|
+            = link_to image_tag("#{image}.png"), locale_path(locale), :class => (I18n.locale == locale ? 'active' : '')
+
+

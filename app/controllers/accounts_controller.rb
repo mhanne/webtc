@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
 
-  before_filter :authenticate_user!, :check_bitcoin_keys, :except => :index
+  before_filter :authenticate_user!, :check_bitcoin_keys, :except => [:index, :locale]
 
   def index
     redirect_to :action => :show  if current_user
@@ -31,6 +31,16 @@ class AccountsController < ApplicationController
       flash[:alert] = t('accounts.settings.alert')
     end
     redirect_to :action => :settings
+  end
+
+  def locale
+    if current_user
+      current_user.settings["language"] = params[:id]
+      current_user.save
+    else
+      session[:locale] = params[:id]
+    end
+    redirect_to :back rescue redirect_to root_path
   end
 
 end

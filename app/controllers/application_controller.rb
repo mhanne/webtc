@@ -4,7 +4,13 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   def set_locale
-    I18n.locale = current_user.setting(:language)  if current_user
+    if current_user
+      I18n.locale = current_user.setting(:language)  
+    elsif session[:locale]
+      I18n.locale = session[:locale]
+    else
+      I18n.locale = :en
+    end
   end
 
   def check_bitcoin_keys
