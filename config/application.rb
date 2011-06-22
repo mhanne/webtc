@@ -51,6 +51,11 @@ module WeBTC
       :subkey_size => 1024,
     }
 
+    config.verification = {
+      :code_length => 10,  # verification code length
+      :timeout => 600,     # verification time limit (seconds)
+    }
+
   end
 end
 

@@ -1,0 +1,65 @@
+# single, unverified verification
+v1:
+  id: 1
+  transaction_id: 1
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at:
+
+# single, verified verification
+v2:
+  id: 2
+  transaction_id: 2
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at: <%= Time.now - 10.minutes %>
+
+# multiple verifications, none verified
+v3:
+  id: 3
+  transaction_id: 3
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at:
+
+v4:
+  id: 4
+  transaction_id: 3
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at:
+
+# multiple verifications, some verified
+v5:
+  id: 5
+  transaction_id: 4
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at: <%= Time.now - 10.minutes %>
+
+v6:
+  id: 6
+  transaction_id: 4
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at:
+
+# multiple verifications, all verified
+v7:
+  id: 7
+  transaction_id: 5
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at: <%= Time.now - 10.minutes %>
+
+v8:
+  id: 8
+  transaction_id: 5
+  salt: foobar
+  code: 03435ab76b13e0420db128db85c75e54ca74d721 # 12345
+  verified_at: <%= Time.now - 10.minutes %>
+
+
+
+
+
