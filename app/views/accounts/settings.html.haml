@@ -2,11 +2,15 @@
 = form_tag(account_update_settings_path) do
   %table
     %tr
-      %th= t('accounts.settings.language')
+      %th= t('.language')
       %td= select_tag "settings[language]", options_for_select(User::LANGUAGES, current_user.setting(:language))
     %tr
-      %th= t('accounts.settings.units')
+      %th= t('.units')
       %td= select_tag "settings[units]", options_for_select(User::UNITS.keys.map{|u| [u, u]}, current_user.setting(:units))
     %tr
       %th
-      %td= submit_tag t('accounts.settings.save')
+      %td= submit_tag t('.save')
+
+
+%h2= t('.verification_rules')
+= render :template => "verification_rules/index"

@@ -18,6 +18,11 @@ de:
         fee: Gebühr
         time: Zeit
 
+      verification_rule:
+        amount: Betrag
+        kind: Verifikation
+        created_at: Erstellt
+
   header:
     site_name: WeBTC
     logout: Logout
@@ -94,6 +99,7 @@ de:
       save: Speichern
       notice: Einstellungen gespeichert.
       alert: Fehler beim speichern der Einstellungen.
+      verification_rules: Verifikation-Regeln
 
   addresses:
     index:
@@ -129,6 +135,23 @@ de:
     commit:
       notice: "%{amount} BTC an %{address} gesendet."
       alert: "Fehler: %{error}."
+
+  verification_rules:
+    index:
+      title: Verifikations-Regeln
+      new: Neue Verifikations-Regel
+      dummy: Test
+      email: Email
+      delete: Löschen
+    new:
+      title: Neue Verifikations-Regel
+      cancel: Abbrechen
+      submit: Verifikation-Regel erstellen
+      error:
+        duplicate: Es ist bereits eine Verifikations-Regel mit diesem Betrag und dieser Verifikation vorhanden
+      help:
+        amount: Alle Transaktionen die diesen Betrag übeschreiten verifizieren
+        kind: Art der Verifikation
 
   admin:
     index:

@@ -21,6 +21,11 @@ en:
         fee: Fee
         time: Time
 
+      verification_rule:
+        amount: Amount
+        kind: Method
+        created_at: Created
+
   header:
     site_name: WeBTC
     logout: Sign Out
@@ -98,6 +103,7 @@ en:
       save: Save
       notice: Account settings changed.
       alert: Error changing account settings.
+      verification_rules: Verification Rules
 
   addresses:
     index:
@@ -132,6 +138,24 @@ en:
     commit:
       notice: "You sent %{amount} BTC to %{address}."
       alert: "Error committing transaction: %{error}."
+
+  verification_rules:
+    index:
+      title: Verification Rules
+      new: New Verification Rule
+      dummy: Test
+      email: Email
+      delete: Delete
+    new:
+      title: New Verification Rule
+      cancel: Cancel
+      submit: Create Verification Rule
+      error:
+        duplicate: Verification Rule with this method and amount already exists
+      help:
+        amount: Verify all transactions that exceed this amount
+        kind: Method of verification
+           
 
   admin:
     index:

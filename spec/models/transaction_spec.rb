@@ -2,11 +2,32 @@ require 'spec_helper'
 
 describe Transaction do
   
-  fixtures :transactions, :verifications, :users
+  fixtures :all
 
   context :verification do
-    
+  
+    context :no_verifications do
+
+      it "should be created without verifications" do
+        t = Transaction.create(:user_id => 1, :address => "1234", :amount => 5)
+        t.verifications.size.should == 0
+        t.verified?.should == true
+      end
+      
+      it "should be verified if it has no verifications" do
+        transactions(:t6).verified?.should == true
+      end
+
+    end
+
     context :with_one_verification do
+
+      it "should be created with single verification" do
+        t = Transaction.create(:user_id => 1, :address => "1234", :amount => 15)
+        t.verifications.size.should == 1
+        t.verifications.first.kind.should == "dummy"
+        t.verified?.should == false
+      end
 
       it "should not be verified if verification is not verified" do
         transactions(:t1).verified?.should == false
@@ -20,6 +41,14 @@ describe Transaction do
 
     context :with_multiple_verifications do
       
+      it "should be created with multiple verifications" do
+        t = Transaction.create(:user_id => 1, :address => "1234", :amount => 25)
+        t.verifications.size.should == 2
+        t.verifications.first.kind.should == "dummy"
+        t.verifications.second.kind.should == "email"
+        t.verified?.should == false
+      end
+
       it "should not be verified if none of the verifications are verified" do
         transactions(:t3).verified?.should == false
       end

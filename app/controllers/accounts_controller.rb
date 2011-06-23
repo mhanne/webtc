@@ -19,6 +19,7 @@ class AccountsController < ApplicationController
 
   def settings
     @settings = current_user.settings
+    @verification_rules = current_user.verification_rules.order(:amount)
     @page_title = t('accounts.settings.title')
   end
   

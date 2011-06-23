@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :addresses
   has_many :transactions
+  has_many :verification_rules
   has_many :verifications, :through => :transactions
 
   DEFAULT_SETTINGS = {
@@ -26,6 +27,7 @@ class User < ActiveRecord::Base
     "satoshi" => 100_000_000,
   }
 
+  VERIFICATION_KINDS = [:dummy, :email]
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable

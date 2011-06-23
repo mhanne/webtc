@@ -1,0 +1,18 @@
+= form_for(@verification_rule) do |form|
+  %table.form
+    - if @verification_rule.errors.any?
+      %tr
+        %th.error{:colspan => 3}= t(".error.#{@verification_rule.errors.first[0]}")
+
+    %tr
+      %th= form.label :amount, t('activerecord.models.verification_rule.amount')
+      %td= form.text_field :amount
+      %td.help= t('.help.amount')
+    %tr
+      %th= form.label :kind, t('activerecord.models.verification_rule.kind')
+      %td= form.select :kind, User::VERIFICATION_KINDS
+      %td.help= t('.help.kind')
+
+    %tr
+      %th= link_to t('.cancel'), verification_rules_path
+      %td= form.submit t('.submit')

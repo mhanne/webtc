@@ -1,0 +1,12 @@
+vr1:
+  id: 1
+  user_id: 1
+  amount: 10
+  kind: dummy
+
+vr2:
+  id: 2
+  user_id: 1
+  amount: 20
+  kind: email
+
