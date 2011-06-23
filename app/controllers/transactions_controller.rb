@@ -19,40 +19,70 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    address = params[:transaction][:address]
-    @address = Address.get(address)
-    amount = params[:transaction][:amount].to_f
-    factor = User::UNITS[current_user.setting(:units)]
-    if BITCOIN.getbalance(current_user.email) >= (amount / factor) && @address
-      redirect_to check_transaction_path(:transaction => params[:transaction])
+    @transaction = Transaction.new
+    @transaction.user = current_user
+    @transaction.address = params[:transaction][:address]
+    @transaction.amount = parse_amount(params[:transaction][:amount])
+    if current_user.balance >= @transaction.amount
+      if @transaction.save
+        redirect_to verify_transaction_path(@transaction)
+      else
+        flash[:alert] = t('transactions.create.error')
+        return redirect_to account_path
+      end
     else
       flash[:alert] = t('transactions.create.alert_insufficient_funds')
       return redirect_to account_path
     end
   rescue
     flash[:alert] = $!.message
+    puts $!
     return redirect_to account_path
   end
 
-  def check
-    @address = Address.get(params[:transaction][:address])
-    @transaction = params[:transaction]
-    @transaction[:address] = @address
-    @factor = User::UNITS[current_user.setting(:units)]
-    amount = @transaction[:amount].gsub(',', '.').to_f / @factor
-    @transaction[:amount] = amount
-    @page_title = t('transactions.check.title')
+  def verify
+    if params[:code]
+      @verification = Verification.find(params[:id])
+      @transaction = @verification.transaction
+      if @verification && @transaction && @transaction.user == current_user
+        @verification.verify!(params[:code])
+      end
+    else
+      @transaction = Transaction.find(params[:id])
+      if params[:verifications]
+        params[:verifications].each do |id, code|
+          verification = Verification.find(id)
+          verification.verify!(code)
+        end
+      end
+    end
+    if @transaction.verified?
+      redirect_to commit_transaction_path(@transaction)
+    end
   end
 
   def commit
     begin
-      amount = params[:transaction][:amount].to_f
-      address = params[:transaction][:address]
-      txid = BITCOIN.sendfrom(current_user.email, address, amount)
-      flash[:notice] = t('transactions.commit.notice', :amount => amount, :address => address)
-      redirect_to transaction_path(txid)
+      @transaction = Transaction.find(params[:id])
+      if @transaction.verified?
+        if @transaction.amount <= current_user.balance
+          if @transaction.send!
+            flash[:notice] = t('transactions.commit.notice')
+            redirect_to transaction_path(@transaction)
+          else
+            flash[:alert] = t('transactions.commit.alert.error')
+            redirect_to account_path
+          end
+        else
+          flash[:alert] = t('transactions.commit.alert.insufficient_funds')
+          redirect_to account_path
+        end
+      else
+        flash[:alert] = t('transactions.commit.alert.not_verified')
+        redirect_to verify_transaction_path(@transaction)
+      end
     rescue RuntimeError => e
-      flash[:alert] = t('transactions.commit.alert', :error => e.message)
+      flash[:alert] = t('transactions.commit.alert.error')
       redirect_to account_path
     end
   end
@@ -62,6 +92,12 @@ class TransactionsController < ApplicationController
       format.js { render :json => Address.remote(current_user).where("label LIKE ?", "%#{params[:term]}%").map(&:label)}
     end
     
+  end
+
+  private
+  
+  def parse_amount str
+    (str.to_s.gsub(",", ".").to_f * User::UNITS[current_user.setting(:units)]).to_i
   end
 
 end

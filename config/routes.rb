@@ -12,9 +12,9 @@ WeBTC::Application.routes.draw do
   resources :accounts
   resources :addresses
   get 'transactions/autocomplete_address' => 'transactions#autocomplete_address', :as => :transaction_autocomplete_address
-  match 'transactions/check' => 'transactions#check', :as => :check_transaction
-  match 'transactions/commit' => 'transactions#commit', :as => :commit_transaction
+  match 'transactions/verify/:id/:code' => 'transactions#verify', :as => :verify_transaction
   match 'transactions/verify/:id' => 'transactions#verify', :as => :verify_transaction
+  match 'transactions/commit/:id' => 'transactions#commit', :as => :commit_transaction
   resources :transactions
   resources :verification_rules
 

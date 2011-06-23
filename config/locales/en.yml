@@ -21,6 +21,12 @@ en:
         fee: Fee
         time: Time
 
+      verification:
+        kind: Method
+        code: Code
+        dummy: Dummy
+        email: Email
+        
       verification_rule:
         amount: Amount
         kind: Method
@@ -128,13 +134,18 @@ en:
     show:
       title: Show Transaction
       title_transaction: "Transaction %{transaction}"
-    check:
-      title: Check Transaction
+    verify:
+      title: Verify Transaction
+      title_verifications: Missing Verifications
       text: "Do you really want to send %{unit} %{amount} (in words: %{in_words}) to %{address}?"
       commit: Commit Transaction
       cancel: Cancel
+      help:
+        dummy: Dummy verification
+        email: You should have received an email with this code.
     create:
       alert_insufficient_funds: Insufficient Funds
+      error: Error creating transaction
     commit:
       notice: "You sent %{amount} BTC to %{address}."
       alert: "Error committing transaction: %{error}."

@@ -21,9 +21,9 @@ class User < ActiveRecord::Base
               ]
   
   UNITS = {
-    "BTC"  => 100_000_000,
-    "mBTC" => 1_000_000,
-    "uBTC" => 1_000,
+    "BTC"  => 10000000,
+    "mBTC" => 100000,
+    "uBTC" => 100,
     "satoshi" => 1,
   }
 
@@ -106,6 +106,10 @@ class User < ActiveRecord::Base
     else
       DEFAULT_SETTINGS[setting.to_sym]
     end
+  end
+
+  def unit_factor
+    UNITS[setting(:units)]
   end
 
   def create_settings

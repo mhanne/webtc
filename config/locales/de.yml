@@ -132,6 +132,7 @@ de:
       cancel: Abbrechen
     create:
       alert_insufficient_funds: Guthaben reicht nicht aus.
+      error: Fehler beim erstellen der Transaktion
     commit:
       notice: "%{amount} BTC an %{address} gesendet."
       alert: "Fehler: %{error}."

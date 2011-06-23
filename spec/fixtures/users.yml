@@ -1,3 +1,6 @@
 u1:
   id: 1
   email: test1@example.com
+  settings:
+    language: en
+    units: mBTC

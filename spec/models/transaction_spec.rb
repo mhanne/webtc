@@ -22,20 +22,33 @@ describe Transaction do
       list.first["fee"].should == 100000
     end
 
+    it "should not send an unverified transaction" do
+      transactions(:t1).send!.should == false
+    end
+
+    it "should send a transaction" do
+      BITCOIN.should_receive(:sendfrom).with("test1@example.com", "foobar", 0.00000015).and_return("12345")
+      BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => true})
+      transactions(:t2).send!.should == true
+      transactions(:t2).sent?.should == true
+      transactions(:t2).txid.should == "12345"
+    end
+
   end
 
 
   context :verification do
   
-    context :no_verifications do
+    context :with_no_verifications do
 
-      it "should be created without verifications" do
+      it "should be created" do
+        BITCOIN.should_receive(:validateaddress).with("1234").and_return({"isvalid" => true})
         t = Transaction.create(:user_id => 1, :address => "1234", :amount => 5)
         t.verifications.size.should == 0
         t.verified?.should == true
       end
       
-      it "should be verified if it has no verifications" do
+      it "should be verified" do
         transactions(:t6).verified?.should == true
       end
 
@@ -43,7 +56,8 @@ describe Transaction do
 
     context :with_one_verification do
 
-      it "should be created with single verification" do
+      it "should be created" do
+        BITCOIN.should_receive(:validateaddress).with("1234").and_return({"isvalid" => true})
         t = Transaction.create(:user_id => 1, :address => "1234", :amount => 15)
         t.verifications.size.should == 1
         t.verifications.first.kind.should == "dummy"
@@ -62,7 +76,8 @@ describe Transaction do
 
     context :with_multiple_verifications do
       
-      it "should be created with multiple verifications" do
+      it "should be created" do
+        BITCOIN.should_receive(:validateaddress).with("1234").and_return({"isvalid" => true})
         t = Transaction.create(:user_id => 1, :address => "1234", :amount => 25)
         t.verifications.size.should == 2
         t.verifications.first.kind.should == "dummy"
@@ -85,6 +100,5 @@ describe Transaction do
     end
 
   end
-
 
 end

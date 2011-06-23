@@ -40,11 +40,11 @@ module ApplicationHelper
     link_to txid.truncate(20), transaction_path(txid), :title => txid rescue "-"
   end
 
-  def amount_in_words float
-    s = float.to_s.split('.')
+  def amount_in_words amount
+    s = amount.to_s.split('.')
     res = Linguistics::EN.numwords(s[0])
-    res << " point "
-    res << s[1].split('').map {|n| Linguistics::EN.numwords(n)}.join(" ")
+    res << " point "  if s[1]
+    res << s[1].split('').map {|n| Linguistics::EN.numwords(n)}.join(" ")  if s[1]
     res
   end
 
