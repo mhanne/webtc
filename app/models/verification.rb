@@ -3,6 +3,7 @@ class Verification < ActiveRecord::Base
   belongs_to :transaction
 
   before_create :generate_code
+  after_create :deliver_code
 
   attr_accessor :secret
 
@@ -21,6 +22,10 @@ class Verification < ActiveRecord::Base
     !!verified_at
   end
 
+  def user
+    transaction.user
+  end
+
   private
 
   def generate_code
@@ -28,6 +33,10 @@ class Verification < ActiveRecord::Base
     self.salt = SecureRandom.base64
     @secret = (SecureRandom.random_number * (10 ** length)).to_i.to_s
     self.code ||= Digest::SHA1.hexdigest("#{self.salt}-#{@secret}")
+  end
+
+  def deliver_code
+    VerificationMailer.verification_code(self).deliver
   end
 
 end

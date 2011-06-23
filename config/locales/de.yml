@@ -152,3 +152,25 @@ de:
     balance: "Guthaben: %{balance}"
     testnet: TESTNET
     
+
+  mail:
+    format: |-
+            %{greeting}
+            
+            %{body}
+
+            %{salutation}
+    greeting: "Hallo %{user},"
+    salutation: |-
+                -- WeBTC
+
+    verification:
+      subject: WeBTC Transaktion verifizieren
+      body: |-
+            Sie sind dabei %{unit} %{amount} an %{address} zu senden.
+            Um die Transaktion zu verifizieren, klicken Sie bitte den
+            folgenden Link, oder geben sie den Code manuell ein.
+
+             %{link}
+
+             %{code}

@@ -156,3 +156,25 @@ en:
     balance: "Balance: %{balance}"
     testnet: TESTNET
     
+
+  mail:
+    format: |-
+            %{greeting}
+            
+            %{body}
+
+            %{salutation}
+    greeting: "Hello %{user},"
+    salutation: |-
+                -- WeBTC
+
+    verification:
+      subject: WeBTC transaction verification
+      body: |-
+            You are about to send %{unit} %{amount} BTC to %{address}.
+            To verify this transaction, please click the following link,
+            or enter the code manually on the transaction page.
+
+             %{link}
+            
+             %{code}

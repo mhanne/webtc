@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Transaction do
   
-  fixtures :transactions, :verifications
+  fixtures :transactions, :verifications, :users
 
   context :verification do
     

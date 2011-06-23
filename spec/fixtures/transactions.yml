@@ -1,29 +1,34 @@
 # simple transaction with one unverified verification
 t1:
   id: 1
+  user_id: 1
   address: mmNBMgDpjSsPrSnZmCQ8UJr9yu6MuzVDYu
   amount: 100000000
 
 # simple transaction with one verified verification
 t2:
   id: 2
+  user_id: 1
   address: msCqom5YVV6jBjoJrajtAKk4rXcGnXHfE9
   amount: 25000000
 
 # transaction with multiple verifications, none unverified
 t3:
   id: 3
+  user_id: 1
   address: mtkXxkNMe9P9xZC9rppPPmpWbGzJmhxQQP
   amount: 100000000
 
 # transaction with multiple verifications, some unverified
 t4:
   id: 4
+  user_id: 1
   address: n1apsVX5HTs1xWaGuSr4Xj82DMjxVUxbB5
   amount: 100000000
 
 # transaction with multiple verifications, all unverified
 t5:
   id: 5
+  user_id: 1
   address: mt45zawUzVsQYjQtDbfBR6W5gQsk7LZdAR
   amount: 100000000

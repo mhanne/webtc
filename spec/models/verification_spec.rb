@@ -4,16 +4,22 @@ describe Verification do
   
   fixtures :verifications, :transactions, :users
 
+  include WeBTC::Application.routes.url_helpers
+
   before :each do
     WeBTC::Application.config.verification = {
       :code_length => 10,
       :timeout => 10,
+    }
+    WeBTC::Application.config.mail = {
+      :from => "webtc@example.com",
     }
     @transaction_data = {:user_id => users(:u1),
       :address => "mmNBMgDpjSsPrSnZmCQ8UJr9yu6MuzVDYu",
       :amount => 1000000
     }
     @v1 = verifications(:v1)
+    ActionMailer::Base.deliveries = []
   end
 
   it "should create a verification with a transaction" do
@@ -55,5 +61,25 @@ describe Verification do
     @v1.verified?.should == true
   end
 
+  it "should send the verification code email" do
+    I18n.locale = :en
+    
+    transaction = transactions(:t1)
+    verification = Verification.create(:transaction => transaction)
+    ActionMailer::Base.deliveries.size.should == 1
+    mail = ActionMailer::Base.deliveries.first
+    mail.to.first.should == users(:u1).email
+    mail.subject.should == I18n.t('mail.verification.subject')
+    mail.body.should == I18n.t('mail.format',
+                               :greeting => I18n.t('mail.greeting',
+                                                   :user => users(:u1).email),
+                               :body => I18n.t('mail.verification.body',
+                                          :amount => transaction.amount,
+                                          :unit => users(:u1).setting(:units),
+                                          :address => transaction.address,
+                                          :link => verify_transaction_url(verification.secret, :host => "localhost:3000"),
+                                          :code => verification.secret),
+                               :salutation => I18n.t('mail.salutation'))
+  end
 
 end

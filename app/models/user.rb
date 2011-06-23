@@ -6,6 +6,8 @@ require 'digest/sha1'
 class User < ActiveRecord::Base
 
   has_many :addresses
+  has_many :transactions
+  has_many :verifications, :through => :transactions
 
   DEFAULT_SETTINGS = {
     :language => "en",

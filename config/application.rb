@@ -56,6 +56,10 @@ module WeBTC
       :timeout => 600,     # verification time limit (seconds)
     }
 
+    config.mail = {
+      :from => "webtc@example.com",
+    }
+
   end
 end
 
