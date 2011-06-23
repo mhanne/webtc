@@ -2,7 +2,7 @@ module ApplicationHelper
 
   def display_amount amount
     unit = current_user.setting("units") rescue User::DEFAULT_SETTINGS[:units]
-    amount = amount.to_f * User::UNITS[unit]
+    amount = (amount || 0) / User::UNITS[unit]
     language = current_user.setting(:language) rescue User::DEFAULT_SETTINGS[:language]
     case language
     when "de"
@@ -16,7 +16,7 @@ module ApplicationHelper
                   when 'mBTC' then 5
                   when 'BTC' then 8
                   end
-    number_to_currency(amount, :precision => precision,
+    number_to_currency(amount.to_f, :precision => precision,
                        :unit => "", :locale => language,
                        :separator => separator, :delimiter => delimiter)
   end

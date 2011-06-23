@@ -4,12 +4,12 @@ class TransactionsController < ApplicationController
 
   def index
     @limit = (params[:limit] || 10).to_i
-    @transactions = BITCOIN.listtransactions(current_user.email, @limit).reverse
+    @transactions = Transaction.list(current_user.email, @limit).reverse
     @page_title = t('transactions.index.title')
   end
 
   def show
-    @transaction = BITCOIN.gettransaction(params[:id])
+    @transaction = Transaction.get(params[:id])
     unless @transaction["details"].map{|d| d["account"]}.include?(current_user.email)
       return redirect_to destroy_user_session_path
     end

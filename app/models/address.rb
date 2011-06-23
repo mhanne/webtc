@@ -9,9 +9,27 @@ class Address < ActiveRecord::Base
   scope :local, ->(user) { where(:user_id => user.id, :is_local => true) }
   scope :remote, ->(user) { where(:user_id => user.id, :is_local => false) }
 
+  def self.list account
+    BITCOIN.getaddressesbyaccount(account)
+  end
+
   def self.get address
     Address.find_by_address(address) || Address.find_by_label(address) || Address.new(:address => address)
   end
+
+  def self.valid? address
+    BITCOIN.validateaddress(address)["isvalid"]
+  end
+
+  def self.mine? address
+    BITCOIN.validateaddress(address)["ismine"]
+  end
+
+
+  def listtransactions *args
+    user.listtransactions(*args).select {|a| a["address"] == address}
+  end
+
 
   def label_or_address
     label && label != "" ? label : address
@@ -19,6 +37,10 @@ class Address < ActiveRecord::Base
 
   def to_param
     address
+  end
+
+  def received
+    (BITCOIN.getreceivedbyaddress(address) * 1e8).to_i
   end
 
 

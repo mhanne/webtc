@@ -4,6 +4,27 @@ describe Transaction do
   
   fixtures :all
 
+  context :bitcoin do
+    
+    before :each do
+      Kernel.silence_warnings { BITCOIN = mock(:bitcoin) }
+    end
+
+    it "should format amount" do
+      BITCOIN.should_receive(:listtransactions).and_return([{"amount"=>10.00000000}])
+      list = Transaction.list
+      list.first["amount"].should == 1000000000
+    end
+
+    it "should format fee" do
+      BITCOIN.should_receive(:listtransactions).and_return([{"fee"=>0.00100000}])
+      list = Transaction.list
+      list.first["fee"].should == 100000
+    end
+
+  end
+
+
   context :verification do
   
     context :no_verifications do

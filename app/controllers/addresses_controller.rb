@@ -3,7 +3,7 @@ class AddressesController < ApplicationController
   before_filter :authenticate_user!, :check_bitcoin_keys
 
   def index
-    @local_addresses = BITCOIN.getaddressesbyaccount(current_user.email)
+    @local_addresses = current_user.getaddresses
     @local_addresses.map! {|a| Address.get(a) }
     @local_addresses.select!{|a| a.is_local?}
     @local_addresses.sort_by!{|a| "#{a.label}\xff"}
@@ -14,16 +14,13 @@ class AddressesController < ApplicationController
   def show
     address = params[:id]
     @address = Address.get(address)
-    @account = BITCOIN.getaccount(address)
-    @transactions = BITCOIN.listtransactions(@account, 100).select do |transaction|
-      transaction["address"] == address
-    end
+    @transactions = @address.listtransactions(100)
     @page_title = t('addresses.show.title', :address => @address.label_or_address)
   end
 
   def create
     if params[:address][:address]
-      if BITCOIN.validateaddress(params[:address][:address])["isvalid"]
+      if Address.valid?(params[:address][:address])
         @address = Address.new(:user => current_user,
                                :address => params[:address][:address],
                                :label => params[:address][:label],
@@ -33,7 +30,7 @@ class AddressesController < ApplicationController
         return redirect_to account_path
       end
     else
-      address = BITCOIN.getnewaddress(current_user.email)
+      address = current_user.getnewaddress
       @address = Address.new(:user => current_user,
                              :address => address,
                              :label => params[:address][:label],

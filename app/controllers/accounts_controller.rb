@@ -7,9 +7,9 @@ class AccountsController < ApplicationController
   end
 
   def show
-    @transactions = BITCOIN.listtransactions(current_user.email, 5).reverse
-    @balance = BITCOIN.getbalance(current_user.email)
-    @local_addresses = BITCOIN.getaddressesbyaccount(current_user.email).map do |address|
+    @transactions = Transaction.list(current_user.email, 5).reverse
+    @balance = current_user.balance
+    @local_addresses = current_user.getaddresses.map do |address|
       Address.get(address)
     end.select {|a| a.label && a.label != "" }.sort_by!{|a| a.label || "\xff"}
     @remote_addresses = []

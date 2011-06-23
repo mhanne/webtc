@@ -14,9 +14,9 @@
       - if current_user
         .account
           %span.name= link_to current_user.email, edit_user_registration_path(current_user)
-          %span.balance #{display_amount(BITCOIN.getbalance(current_user.email))} #{current_user.setting(:units)}
+          %span.balance #{display_amount(current_user.balance)} #{current_user.setting(:units)}
           %br/
-          %span.address (#{BITCOIN.getaccountaddress(current_user.email)})
+          %span.address (#{current_user.accountaddress})
 
         .user= link_to t('header.logout'), destroy_user_session_path
       - else

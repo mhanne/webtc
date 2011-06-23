@@ -21,10 +21,10 @@ class User < ActiveRecord::Base
               ]
   
   UNITS = {
-    "BTC"  => 1,
-    "mBTC" => 1_000,
-    "uBTC" => 1_000_000,
-    "satoshi" => 100_000_000,
+    "BTC"  => 100_000_000,
+    "mBTC" => 1_000_000,
+    "uBTC" => 1_000,
+    "satoshi" => 1,
   }
 
   VERIFICATION_KINDS = [:dummy, :email]
@@ -37,15 +37,16 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
-  before_create :check_bitcoin_account
-  after_create :create_gpg_key, :create_bitcoin_address
-  before_update :check_address_not_changed, :check_password_changed
+  validate :check_bitcoin_account
+  validate :check_address_not_changed
+  after_create :create_gpg_key, :create_bitcoin_address, :create_settings
+  before_update :check_password_changed
   after_destroy :unload_keys, :remove_gpg_key
 
   serialize :settings, Hash
 
   def check_bitcoin_account
-    if BITCOIN.getaddressesbyaccount(email).size > 0
+    if new_record? && BITCOIN.getaddressesbyaccount(email).size > 0
       errors.add("email", :taken)
       return false
     end
@@ -107,6 +108,9 @@ class User < ActiveRecord::Base
     end
   end
 
+  def create_settings
+    self.settings ||= DEFAULT_SETTINGS
+  end
   
   def unload_keys
     BITCOIN.getaddressesbyaccount(email).each do |addr|
@@ -122,6 +126,27 @@ class User < ActiveRecord::Base
       address.load(password)
     end
     update_attribute :keys_loaded, true
+  end
+
+  
+  def balance
+    (BITCOIN.getbalance(email) * 1e8).to_i
+  end
+
+  def accountaddress
+    BITCOIN.getaccountaddress(email)
+  end
+
+  def getaddresses
+    Address.list(email)
+  end
+
+  def listtransactions(*args)
+    Transaction.list(email, *args)
+  end
+
+  def newaddress
+    BITCOIN.getnewaddress(email)
   end
 
 end
