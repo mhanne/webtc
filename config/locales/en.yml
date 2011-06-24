@@ -142,6 +142,8 @@ en:
       text: "Do you really want to send %{unit} %{amount} (in words: %{in_words}) to %{address}?"
       commit: Commit Transaction
       cancel: Cancel
+      alert:
+        denied: Transaction denied by absolute limit
       help:
         dummy: Dummy verification
         email: You should have received an email with this code.
@@ -156,9 +158,8 @@ en:
     index:
       title: Verification Rules
       new: New Verification Rule
-      dummy: Test
-      email: Email
       delete: Delete
+      delete_confirm: Really delete Verification Rule?
     new:
       title: New Verification Rule
       cancel: Cancel
@@ -171,7 +172,9 @@ en:
         timeframe: Verify transactions if total spent amount exceeds limit during this timeframe
       kind:
         dummy: Test
+        confirm: Confirmation page
         email: Email confirmation
+        deny: Deny always
       timeframe:
         minute: per Minute
         hour: per Hour
@@ -179,6 +182,10 @@ en:
         week: per Week
         month: per Month
         year: per Year
+    create:
+      notice: Verification Rule created
+    delete:
+      notice: Verification Rule deleted
            
 
   admin:

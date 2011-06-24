@@ -7,6 +7,12 @@ class Verification < ActiveRecord::Base
 
   attr_accessor :secret
 
+  scope :confirm, :conditions => {:kind => "confirm"}
+  scope :deny, :conditions => {:kind => "deny"}
+  scope :normal, :conditions => ["kind != ? AND kind != ?", "confirm", "deny"]
+
+  KINDS = [:dummy, :confirm, :email, :deny]
+
   def verify! secret
     timeout = WeBTC::Application.config.verification[:timeout]
     return false  if created_at + timeout <= Time.now
@@ -40,8 +46,12 @@ class Verification < ActiveRecord::Base
     when "dummy"
       @dummy_verification_code = @secret
       logger.info "Dummy verification code: #{@secret}"
+    when "confirm"
+      update_attribute :destination, @secret
     when "email"
       VerificationMailer.verification_code(self).deliver
+    when "deny"
+      @secret = nil  # throw away the code so this will never be verified
     end
   end
 

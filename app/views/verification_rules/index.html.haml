@@ -1,14 +1,16 @@
 %table
   %tr
     %th= t('activerecord.models.verification_rule.amount')
-    %th= t('activerecord.models.verification_rule.kind')
     %th= t('activerecord.models.verification_rule.timeframe')
+    %th= t('activerecord.models.verification_rule.kind')
     %th= t('activerecord.models.verification_rule.created_at')
   - @verification_rules.each do |verification_rule|
     %tr
-      %td= verification_rule.amount
-      %td= t(".#{verification_rule.kind}")
+      %td= display_amount(verification_rule.amount)
       %td= t("verification_rules.new.timeframe.#{verification_rule.timeframe}")
+      %td= t("verification_rules.new.kind.#{verification_rule.kind}")
       %td= verification_rule.created_at
+      %td= button_to t('.delete'), verification_rule_path(verification_rule), :method => :delete,
+        :confirm => t('.delete_confirm')
 
 = link_to t('.new'), new_verification_rule_path

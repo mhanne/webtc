@@ -56,93 +56,93 @@ describe TransactionsController do
       response.should redirect_to(verify_transaction_path(assigns(:transaction)))
     end
 
-    it "should not create new transaction if amount exceeds balance" do
-      BITCOIN.should_receive(:getbalance).with(@user.email).and_return(0)
-      expect do
-        post :create, :transaction => { :address => "foobar", :amount => "123" }
-      end.to_not change { Transaction.count }.by(1)
-      response.should redirect_to(account_path)
-      flash[:alert].should == I18n.t('transactions.create.alert_insufficient_funds')
-    end
+    # it "should not create new transaction if amount exceeds balance" do
+    #   BITCOIN.should_receive(:getbalance).with(@user.email).and_return(0)
+    #   expect do
+    #     post :create, :transaction => { :address => "foobar", :amount => "123" }
+    #   end.to_not change { Transaction.count }.by(1)
+    #   response.should redirect_to(account_path)
+    #   flash[:alert].should == I18n.t('transactions.create.alert_insufficient_funds')
+    # end
 
-    it "should not create new transaction with invalid address" do
-      BITCOIN.should_receive(:getbalance).with(@user.email).and_return(150)
-      BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => false})
-      expect do
-        post :create, :transaction => { :address => "foobar", :amount => "123" }
-      end.to_not change { Transaction.count }.by(1)
-      response.should redirect_to(account_path)
-      flash[:alert].should == I18n.t('transactions.create.error')
-      assigns(:transaction).errors.should == {:address=>["invalid"]}
-    end
+    # it "should not create new transaction with invalid address" do
+    #   BITCOIN.should_receive(:getbalance).with(@user.email).and_return(150)
+    #   BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => false})
+    #   expect do
+    #     post :create, :transaction => { :address => "foobar", :amount => "123" }
+    #   end.to_not change { Transaction.count }.by(1)
+    #   response.should redirect_to(account_path)
+    #   flash[:alert].should == I18n.t('transactions.create.error')
+    #   assigns(:transaction).errors.should == {:address=>["invalid"]}
+    # end
 
   end
 
-  context :verify do
+  # context :verify do
     
-    it "should display verification page for unverified transaction" do
-      post :verify, :id => 1
-      response.should be_success
-    end
+  #   it "should display verification page for unverified transaction" do
+  #     post :verify, :id => 1
+  #     response.should be_success
+  #   end
 
-    it "should verify verifications with given codes posted from form" do
-      transaction = transactions(:t3)
-      post :verify, :id => transaction.id, :verifications => {"3" => "12345", "4" => "12345"}
-      response.should redirect_to(commit_transaction_path(transaction))
-      verifications(:v3).verified?.should == true
-      verifications(:v4).verified?.should == true
-      transaction.verified?.should == true
-    end
+  #   it "should verify verifications with given codes posted from form" do
+  #     transaction = transactions(:t3)
+  #     post :verify, :id => transaction.id, :verifications => {"3" => "12345", "4" => "12345"}
+  #     response.should redirect_to(commit_transaction_path(transaction))
+  #     verifications(:v3).verified?.should == true
+  #     verifications(:v4).verified?.should == true
+  #     transaction.verified?.should == true
+  #   end
 
-    it "should verify a single verification passed by get" do
-      transaction = transactions(:t1)
-      get :verify, :id => 1, :code => "12345"
-      response.should redirect_to(commit_transaction_path(transaction))
-      Verification.find(1).verified?.should == true
-      transaction.verified?.should == true
-    end
+  #   it "should verify a single verification passed by get" do
+  #     transaction = transactions(:t1)
+  #     get :verify, :id => 1, :code => "12345"
+  #     response.should redirect_to(commit_transaction_path(transaction))
+  #     Verification.find(1).verified?.should == true
+  #     transaction.verified?.should == true
+  #   end
 
-    it "should redirect to commit_transaction_path for verified transaction" do
-      transaction = transactions(:t2)
-      post :verify, :id => transaction.id
-      response.should redirect_to(commit_transaction_path(transaction))
-    end
+  #   it "should redirect to commit_transaction_path for verified transaction" do
+  #     transaction = transactions(:t2)
+  #     post :verify, :id => transaction.id
+  #     response.should redirect_to(commit_transaction_path(transaction))
+  #   end
 
-  end
+  # end
 
-  context :commit do
+  # context :commit do
     
-    it "should not commit an unverified transaction" do
-      get :commit, :id => 1
-      response.should redirect_to(verify_transaction_path(1))
-      flash[:alert].should == I18n.t('transactions.commit.alert.not_verified')
-      Transaction.find(1).sent?.should == false
-      Transaction.find(1).txid.should == nil
-    end
+  #   it "should not commit an unverified transaction" do
+  #     get :commit, :id => 1
+  #     response.should redirect_to(verify_transaction_path(1))
+  #     flash[:alert].should == I18n.t('transactions.commit.alert.not_verified')
+  #     Transaction.find(1).sent?.should == false
+  #     Transaction.find(1).txid.should == nil
+  #   end
 
-    it "should not commit a transaction that exceeds account balance" do
-      BITCOIN.should_receive(:getbalance).with("test1@example.com").and_return(0.0)
-      get :commit, :id => 2
-      response.should redirect_to(account_path)
-      flash[:alert].should == I18n.t('transactions.commit.alert.insufficient_funds')
-      Transaction.find(2).sent?.should == false
-      Transaction.find(2).txid.should == nil
-    end
+  #   it "should not commit a transaction that exceeds account balance" do
+  #     BITCOIN.should_receive(:getbalance).with("test1@example.com").and_return(0.0)
+  #     get :commit, :id => 2
+  #     response.should redirect_to(account_path)
+  #     flash[:alert].should == I18n.t('transactions.commit.alert.insufficient_funds')
+  #     Transaction.find(2).sent?.should == false
+  #     Transaction.find(2).txid.should == nil
+  #   end
 
-    it "should commit a proper verified transaction" do
-      BITCOIN.should_receive(:getbalance).with("test1@example.com").and_return(100.0)
-      BITCOIN.should_receive(:sendfrom).with("test1@example.com", "foobar", 0.00000015).and_return("testtxid")
-      BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => true})
-      get :commit, :id => 2
-      response.should redirect_to(transaction_path("testtxid"))
-      flash[:notice].should == I18n.t('transactions.commit.notice',
-                                      :amount => "0.00015", :address => "foobar",
-                                      :unit => "mBTC")
-      Transaction.find(2).sent?.should == true
-      Transaction.find(2).txid.should == "testtxid"
-    end
+  #   it "should commit a proper verified transaction" do
+  #     BITCOIN.should_receive(:getbalance).with("test1@example.com").and_return(100.0)
+  #     BITCOIN.should_receive(:sendfrom).with("test1@example.com", "foobar", 0.00000015).and_return("testtxid")
+  #     BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => true})
+  #     get :commit, :id => 2
+  #     response.should redirect_to(transaction_path("testtxid"))
+  #     flash[:notice].should == I18n.t('transactions.commit.notice',
+  #                                     :amount => "0.00015", :address => "foobar",
+  #                                     :unit => "mBTC")
+  #     Transaction.find(2).sent?.should == true
+  #     Transaction.find(2).txid.should == "testtxid"
+  #   end
 
-  end
+  # end
 
 
 end

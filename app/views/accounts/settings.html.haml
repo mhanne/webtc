@@ -1,6 +1,6 @@
 
 = form_tag(account_update_settings_path) do
-  %table
+  %table.form
     %tr
       %th= t('.language')
       %td= select_tag "settings[language]", options_for_select(User::LANGUAGES, current_user.setting(:language))

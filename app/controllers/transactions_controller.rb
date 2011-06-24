@@ -58,7 +58,10 @@ class TransactionsController < ApplicationController
         end
       end
     end
-    if @transaction.verified?
+    if verification = @transaction.verifications.deny.first
+      flash[:alert] = t('transactions.verify.alert.denied')
+      redirect_to account_path
+    elsif @transaction.verified?
       redirect_to commit_transaction_path(@transaction)
     end
   end

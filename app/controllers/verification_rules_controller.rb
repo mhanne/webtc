@@ -25,4 +25,12 @@ class VerificationRulesController < ApplicationController
     end
   end
 
+  def destroy
+    @verification_rule = VerificationRule.find(params[:id])
+    if current_user == @verification_rule.user && @verification_rule.delete
+      flash[:notice] = t('verification_rules.delete.notice')
+      redirect_to account_settings_path
+    end
+  end
+
 end

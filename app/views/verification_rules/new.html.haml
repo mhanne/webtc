@@ -16,7 +16,7 @@
 
     %tr
       %th= form.label :kind, t('activerecord.models.verification_rule.kind')
-      %td= form.select :kind, User::VERIFICATION_KINDS.map {|k| [t(".kind.#{k}"), k]}
+      %td= form.select :kind, Verification::KINDS.map {|k| [t(".kind.#{k}"), k]}
       %td.help= t('.help.kind')
 
     %tr
