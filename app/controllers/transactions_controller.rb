@@ -2,6 +2,8 @@ class TransactionsController < ApplicationController
   
   before_filter :authenticate_user!, :check_bitcoin_keys
 
+  include ApplicationHelper
+  
   def index
     @limit = (params[:limit] || 10).to_i
     @transactions = Transaction.list(current_user.email, @limit).reverse
@@ -21,7 +23,7 @@ class TransactionsController < ApplicationController
   def create
     @transaction = Transaction.new
     @transaction.user = current_user
-    @transaction.address = params[:transaction][:address]
+    @transaction.address = Address.get(params[:transaction][:address]).address
     @transaction.amount = parse_amount(params[:transaction][:amount])
     if current_user.balance >= @transaction.amount
       if @transaction.save
@@ -67,8 +69,11 @@ class TransactionsController < ApplicationController
       if @transaction.verified?
         if @transaction.amount <= current_user.balance
           if @transaction.send!
-            flash[:notice] = t('transactions.commit.notice')
-            redirect_to transaction_path(@transaction)
+            flash[:notice] = t('transactions.commit.notice',
+                               :amount => display_amount(@transaction.amount),
+                               :unit => current_user.setting(:units),
+                               :address => Address.get(@transaction.address).label_or_address)
+            redirect_to transaction_path(@transaction.txid)
           else
             flash[:alert] = t('transactions.commit.alert.error')
             redirect_to account_path
@@ -94,10 +99,5 @@ class TransactionsController < ApplicationController
     
   end
 
-  private
-  
-  def parse_amount str
-    (str.to_s.gsub(",", ".").to_f * User::UNITS[current_user.setting(:units)]).to_i
-  end
 
 end

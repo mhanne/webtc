@@ -39,6 +39,7 @@ class Verification < ActiveRecord::Base
     case self.kind
     when "dummy"
       @dummy_verification_code = @secret
+      logger.info "Dummy verification code: #{@secret}"
     when "email"
       VerificationMailer.verification_code(self).deliver
     end

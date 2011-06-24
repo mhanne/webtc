@@ -134,8 +134,10 @@ describe TransactionsController do
       BITCOIN.should_receive(:sendfrom).with("test1@example.com", "foobar", 0.00000015).and_return("testtxid")
       BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => true})
       get :commit, :id => 2
-      response.should redirect_to(transaction_path(2))
-      flash[:notice].should == I18n.t('transactions.commit.notice')
+      response.should redirect_to(transaction_path("testtxid"))
+      flash[:notice].should == I18n.t('transactions.commit.notice',
+                                      :amount => "0.00015", :address => "foobar",
+                                      :unit => "mBTC")
       Transaction.find(2).sent?.should == true
       Transaction.find(2).txid.should == "testtxid"
     end

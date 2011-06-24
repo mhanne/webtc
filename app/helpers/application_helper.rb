@@ -1,8 +1,10 @@
 module ApplicationHelper
 
+  include ActionView::Helpers::NumberHelper
+
   def display_amount amount
     unit = current_user.setting("units") rescue User::DEFAULT_SETTINGS[:units]
-    amount = (amount || 0) / User::UNITS[unit]
+    amount = (amount || 0).to_f / User::UNITS[unit]
     language = current_user.setting(:language) rescue User::DEFAULT_SETTINGS[:language]
     case language
     when "de"

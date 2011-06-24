@@ -47,7 +47,9 @@ class Transaction < ActiveRecord::Base
 
   def create_verifications
     user.verification_rules.each do |verification_rule|
-      if amount >= verification_rule.amount
+      # TODO: choose only committed transactions
+      transactions = user.transactions.where("created_at > ?", Time.now - 1.send(verification_rule.timeframe))
+      if transactions.sum(:amount) + amount >= verification_rule.amount
         verifications << Verification.new(:kind => verification_rule.kind)
       end
     end

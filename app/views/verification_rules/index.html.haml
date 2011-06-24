@@ -2,11 +2,13 @@
   %tr
     %th= t('activerecord.models.verification_rule.amount')
     %th= t('activerecord.models.verification_rule.kind')
+    %th= t('activerecord.models.verification_rule.timeframe')
     %th= t('activerecord.models.verification_rule.created_at')
   - @verification_rules.each do |verification_rule|
     %tr
       %td= verification_rule.amount
       %td= t(".#{verification_rule.kind}")
+      %td= t("verification_rules.new.timeframe.#{verification_rule.timeframe}")
       %td= verification_rule.created_at
 
 = link_to t('.new'), new_verification_rule_path

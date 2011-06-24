@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def parse_amount str
+    (str.to_s.gsub(",", ".").to_f * User::UNITS[current_user.setting(:units)]).to_i
+  end
+
 end

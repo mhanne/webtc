@@ -15,6 +15,7 @@ class VerificationRulesController < ApplicationController
   def create
     @verification_rule = VerificationRule.new(params[:verification_rule])
     @verification_rule.user = current_user
+    @verification_rule.amount = parse_amount(params[:verification_rule][:amount])
     if @verification_rule.save
       flash[:notice] = t('verification_rules.create.notice')
       redirect_to account_settings_path

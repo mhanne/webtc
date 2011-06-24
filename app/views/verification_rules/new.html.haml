@@ -8,9 +8,15 @@
       %th= form.label :amount, t('activerecord.models.verification_rule.amount')
       %td= form.text_field :amount
       %td.help= t('.help.amount')
+
+    %tr
+      %th= form.label :timeframe, t('activerecord.models.verification_rule.timeframe')
+      %td= form.select :timeframe, %w[minute hour day week month year].map {|n| [t(".timeframe.#{n}"), n]}
+      %td.help= t('.help.timeframe')
+
     %tr
       %th= form.label :kind, t('activerecord.models.verification_rule.kind')
-      %td= form.select :kind, User::VERIFICATION_KINDS
+      %td= form.select :kind, User::VERIFICATION_KINDS.map {|k| [t(".kind.#{k}"), k]}
       %td.help= t('.help.kind')
 
     %tr

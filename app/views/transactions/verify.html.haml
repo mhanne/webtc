@@ -1,0 +1,29 @@
+= form_tag(verify_transaction_path(@transaction)) do
+  = t('.text',
+    :amount => display_amount(@transaction.amount),
+    :in_words => amount_in_words(@transaction.amount / current_user.unit_factor),
+    :unit => current_user.setting(:units),
+    :address => display_address(Address.get(@transaction.address))).html_safe
+
+  %br/
+  %br/
+  %h3= t('.title_verifications')
+  %br/
+  %table.form
+    %tr
+      %th= t('activerecord.models.verification.kind')
+      %th= t('activerecord.models.verification.code')
+      %th
+    - @transaction.verifications.each do |verification|
+      - next  if verification.verified?
+      %tr
+        %th= label "verifications", verification.id, t("activerecord.models.verification.#{verification.kind}")
+        %td= text_field "verifications", verification.id
+        %td= t(".help.#{verification.kind}")
+        
+    %tr
+      %th= link_to t('.cancel'), account_path
+      %td= submit_tag t('.commit'), :id => "commit_transaction"
+  
+
+= javascript_tag "$('#commit_transaction').focus()"

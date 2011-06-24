@@ -2,6 +2,7 @@
 # See http://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
+
   activerecord:
     models:
 
@@ -30,6 +31,7 @@ en:
       verification_rule:
         amount: Amount
         kind: Method
+        timeframe: Timeframe
         created_at: Created
 
   header:
@@ -147,7 +149,7 @@ en:
       alert_insufficient_funds: Insufficient Funds
       error: Error creating transaction
     commit:
-      notice: "You sent %{amount} BTC to %{address}."
+      notice: "You sent %{unit} %{amount} to %{address}."
       alert: "Error committing transaction: %{error}."
 
   verification_rules:
@@ -164,8 +166,19 @@ en:
       error:
         duplicate: Verification Rule with this method and amount already exists
       help:
-        amount: Verify all transactions that exceed this amount
+        amount: Verify transactions if total spent amount exceeds this amount
         kind: Method of verification
+        timeframe: Verify transactions if total spent amount exceeds limit during this timeframe
+      kind:
+        dummy: Test
+        email: Email confirmation
+      timeframe:
+        minute: per Minute
+        hour: per Hour
+        day: per Day
+        week: per Week
+        month: per Month
+        year: per Year
            
 
   admin:
