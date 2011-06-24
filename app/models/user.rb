@@ -144,7 +144,7 @@ class User < ActiveRecord::Base
   end
 
   def listtransactions(*args)
-    Transaction.list(email, *args)
+    Transaction.list(email || "*", *args)
   end
 
   def newaddress

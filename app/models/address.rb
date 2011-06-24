@@ -27,7 +27,7 @@ class Address < ActiveRecord::Base
 
 
   def listtransactions *args
-    user.listtransactions(*args).select {|a| a["address"] == address}
+    (user || User.new).listtransactions(*args).select {|a| a["address"] == address}
   end
 
 
