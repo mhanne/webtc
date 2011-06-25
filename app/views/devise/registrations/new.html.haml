@@ -1,23 +1,31 @@
 - @page_title = t('accounts.sign_up.title')
 
 = form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  = devise_error_messages!
   %table.form
     %tr
       %th= f.label :email, t('accounts.user.email')
       %td= f.email_field :email
-      %td.help= t('accounts.sign_up.help.email')
+      - if @user.errors[:email]
+        %th.error= @user.errors[:email].uniq.join(", ")
+      - else
+        %td.help= t('accounts.sign_up.help.email')
       
 
     %tr
       %th= f.label :password, t('accounts.user.password')
       %td= f.password_field :password
-      %td.help= t('accounts.sign_up.help.password')
+      - if @user.errors[:password]
+        %th.error= @user.errors[:password].join(", ")
+      - else
+        %td.help= t('accounts.sign_up.help.password')
 
     %tr
       %th= f.label :password_confirmation, t('accounts.user.password_confirmation')
       %td= f.password_field :password_confirmation
-      %td.help= t('accounts.sign_up.help.password_confirmation')
+      - if @user.errors[:password_confirmation].any?
+        %th.error= @user.errors[:password_confirmation].join(", ")
+      - else
+        %td.help= t('accounts.sign_up.help.password_confirmation')
 
     %tr
       %th= t('accounts.settings.language')
