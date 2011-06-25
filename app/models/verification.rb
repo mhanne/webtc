@@ -18,6 +18,9 @@ class Verification < ActiveRecord::Base
     return false  if created_at + timeout <= Time.now
     if Digest::SHA1.hexdigest("#{salt}-#{secret}") == code
       update_attribute :verified_at, Time.now
+      unless transaction.verifications.map(&:verified?).include?("false")
+        transaction.verify!
+      end
       true
     else
       false

@@ -1,5 +1,7 @@
 class Transaction < ActiveRecord::Base
 
+  include AASM
+
   belongs_to :user
   has_many :verifications
 
@@ -9,6 +11,20 @@ class Transaction < ActiveRecord::Base
   validate :validate_address
   
   before_create :create_verifications
+
+  aasm_initial_state :new
+  aasm_state :new
+  aasm_state :verified
+  aasm_state :committed
+
+  aasm_event :verify do
+    transitions :from => :new, :to => :verified, :guard => :verified?
+  end
+
+  aasm_event :commit do
+    transitions :from => [:new, :verified], :to => :committed, :guard => :verified?
+  end
+
 
   def self.list *args
     BITCOIN.listtransactions(*args).map {|t| parse_transaction(t)}
@@ -38,6 +54,7 @@ class Transaction < ActiveRecord::Base
     txid = BITCOIN.sendfrom(user.email, address, amount.to_f / 1e8)
     if txid
       update_attributes(:sent_at => Time.now, :txid => txid)
+      commit!
     else
       false
     end
@@ -47,9 +64,14 @@ class Transaction < ActiveRecord::Base
 
   def create_verifications
     user.verification_rules.each do |verification_rule|
-      # TODO: choose only committed transactions
-      transactions = user.transactions.where("created_at > ?", Time.now - 1.send(verification_rule.timeframe))
+      transactions = user.transactions.
+        where("created_at > ?", Time.now - 1.send(verification_rule.timeframe)).
+        where(:aasm_state => "committed")
+
+      p *transactions
+
       if transactions.sum(:amount) + amount >= verification_rule.amount
+        p "EXCEEDS LIMIT"
         verifications << Verification.new(:kind => verification_rule.kind)
       end
     end

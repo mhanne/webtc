@@ -9,6 +9,7 @@ gem 'devise'
 gem 'rails3-jquery-autocomplete'
 gem 'linguistics'
 gem 'gpgme'
+gem 'aasm'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
