@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_bitcoin_keys
+    return true  if current_user && !current_user.encrypt_keys?
     if !current_user || !current_user.keys_loaded?
       sign_out
       return redirect_to new_user_session_path
