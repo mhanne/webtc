@@ -19,6 +19,7 @@ bitcoind RPC API.
 * send transactions (autocomplete labels)
 * (of course it also receives transactions, but bitcoind does that for us :)
 * key encryption (see below)
+* flexible transaction verification / limits
 
 == Key encryption
 
@@ -33,6 +34,19 @@ logged in users' money.
 For this to work, you need a bitcoind that supports dumping, loading and removing
 private keys. For the time being you have to use the 'showwallet' and 'removeprivkey'
 branches from my git repo (git://github.com/mhanne/bitcoin.git).
+
+== Transaction Verification
+
+There are different kinds of verifications, all have in common that they generate a
+code, store a salted hash, and send it to the user through a specified delivery method.
+Delivery methods can be email, SMS, Jabber, whatever.. (only email yet).
+A user can define rules which specifiy an amount, a time frame and a method with which
+to verify each transaction that exceeds the defined amount in the given timeframe.
+When a transaction is created, verifications are created and codes sent out, the user
+then has to enter the codes on the transaction confirmation page.
+There are also two special kinds of verifications:
+"Confirm" only displays the confirmation page, but provides the code in a hidden form field.
+"Deny" throws away the code so it can never be verified; to be used for hard limits.
 
 == Setup
 
