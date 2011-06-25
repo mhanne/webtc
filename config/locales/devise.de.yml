@@ -1,12 +1,18 @@
 de:
   errors:
     messages:
+      expired: "ist abgelaufen, bitte neu beantragen"
       not_found: "nicht gefunden"
       already_confirmed: "wurde bereits bestätigt"
       not_locked: "ist nicht gesperrt"
+      not_saved:
+        one: "1 Fehler hat das speichern dieses %{resource} verhindert:"
+        other: "%{count} Fehler haben das speichern dieser %{resource} verhindert:"
+
 
   devise:
     failure:
+      already_authenticated: 'Sie sind bereits angemeldet.'
       unauthenticated: 'Sie müssen sich anmelden oder registrieren, bevor Sie weiterfahren können.'
       unconfirmed: 'Sie müssen Ihren Account bestätigen, bevor Sie weiterfahren können.'
       locked: 'Ihr Account ist gesperrt.'
@@ -15,23 +21,23 @@ de:
       timeout: 'Ihre Sitzung ist abgelaufen, bitte melden Sie sich erneut an.'
       inactive: 'Ihr Account ist nicht aktiv.'
     sessions:
-      user:
-        signed_in: 'Erfolgreich angemeldet.'
-        signed_out: 'Erfolgreich abgemeldet.'
+      signed_in: 'Erfolgreich angemeldet.'
+      signed_out: 'Erfolgreich abgemeldet.'
     passwords:
       send_instructions: 'Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie ihr Passwort zurücksetzten können.'
       updated: 'Ihr Passwort wurde geändert. Sie sind angemeldet.'
     confirmations:
       send_instructions: 'Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie ihr Passwort zurücksetzten können.'
-      updated: 'Ihr Passwort wurde geändert. Sie sind angemeldet.'
+      confirmed: 'Ihr Passwort wurde geändert. Sie sind angemeldet.'
     registrations:
       signed_up: 'Sie haben sich erfolgreich registriert. Es kann sein, dass Sie eine Aktivierungs-E-Mail erhalten.'
+      inactive_signed_up: 'Sie haben sich erfolgreich registriert. Allerdings konnten wir sie nicht anmelden, weil ihr Account %{reason} ist.'
       updated: 'Die Angaben wurden erfolgreich geändert.'
       destroyed: 'Ihr Account wurde erfolgreich gelöscht.'
     unlocks:
       send_instructions: 'Sie erhalten in wenigen Minuten eine E-Mail mit der Anleitung, wie Sie Ihren Account entsperren können.'
       unlocked: 'Ihr Account wurde entsperrt. Sie sind angemeldet.'
-    oauth_callbacks:
+    omniauth_callbacks:
       success: 'Erfolgreich mit dem %{kind}-Account angemeldet.'
       failure: 'Sie konnten nicht mit dem %{kind}-Account angemeldet werden, weil "%{reason}".'
     mailer:

@@ -18,9 +18,16 @@ de:
         fee: Gebühr
         time: Zeit
 
+      verification:
+        kind: Methode
+        code: Code
+        dummy: Test
+        email: Email
+
       verification_rule:
-        amount: Betrag
+        amount: Limit
         kind: Verifikation
+        timeframe: Zeitraum
         created_at: Erstellt
 
   header:
@@ -124,12 +131,18 @@ de:
     show:
       title: Transaktionsdetails
       title_transaction: "Transaction %{transaction}"
-    check:
-      title: Transaktion überprüfen
+    verify:
+      title: Transaktion verifizieren
+      title_verifications: Fehlende Verifikationen
 #      text: "Wirklich %{unit} %{amount} (in Worten: %{in_words}) an %{address} senden?"
       text: "Wirklich %{unit} %{amount} an %{address} senden?"
-      commit: Transaktion bestätigen
+      commit: Transaktion verifizieren
       cancel: Abbrechen
+      alert:
+        denied: Transaktion aufgrund des absoluten Limits verweigert.
+      help:
+        dummy: Test-Verifikation
+        email: Sie sollten eine Email mit diesem Code erhalten haben.
     create:
       alert_insufficient_funds: Guthaben reicht nicht aus.
       error: Fehler beim erstellen der Transaktion
@@ -141,9 +154,8 @@ de:
     index:
       title: Verifikations-Regeln
       new: Neue Verifikations-Regel
-      dummy: Test
-      email: Email
       delete: Löschen
+      delete_confirm: Verifikations-Regel wirklich löschen?
     new:
       title: Neue Verifikations-Regel
       cancel: Abbrechen
@@ -151,8 +163,25 @@ de:
       error:
         duplicate: Es ist bereits eine Verifikations-Regel mit diesem Betrag und dieser Verifikation vorhanden
       help:
-        amount: Alle Transaktionen die diesen Betrag übeschreiten verifizieren
+        amount: Transaktionen die diesen Betrag übeschreiten verifizieren
         kind: Art der Verifikation
+        timeframe: Transaktionen verifizieren die das Limit in diesem Zeitraum ueberschreiten
+      kind:
+        dummy: Test
+        confirm: Bestätigungsseite
+        email: Email-Bestätigung
+        deny: Verweigern
+      timeframe:
+        minute: per Minute
+        hour: per Hour
+        day: per Day
+        week: per Week
+        month: per Month
+        year: per Year
+    create:
+      notice: Verifikations-Regel erstellt
+    delete:
+      notice: Verifikations-Regel gelöscht
 
   admin:
     index:
