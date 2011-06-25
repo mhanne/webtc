@@ -20,6 +20,7 @@ describe Verification do
     }
     @v1 = verifications(:v1)
     ActionMailer::Base.deliveries = []
+    Kernel.silence_warnings { BITCOIN = mock(:bitcoin) }
   end
 
   context :creation do
@@ -87,6 +88,7 @@ describe Verification do
     end
 
     it "should verify when given a valid code before the timeout has expired" do
+      BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => true})
       @v1.update_attribute :created_at, Time.now - 5
       @v1.verify!("12345").should == true
       @v1.verified?.should == true

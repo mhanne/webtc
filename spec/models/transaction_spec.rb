@@ -28,7 +28,7 @@ describe Transaction do
 
     it "should send a transaction" do
       BITCOIN.should_receive(:sendfrom).with("test1@example.com", "foobar", 0.00000015).and_return("12345")
-      BITCOIN.should_receive(:validateaddress).with("foobar").and_return({"isvalid" => true})
+      BITCOIN.should_receive(:validateaddress).with("foobar").exactly(2).times.and_return({"isvalid" => true})
       transactions(:t2).send!.should == true
       transactions(:t2).sent?.should == true
       transactions(:t2).txid.should == "12345"

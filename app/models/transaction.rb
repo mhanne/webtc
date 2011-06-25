@@ -68,10 +68,7 @@ class Transaction < ActiveRecord::Base
         where("created_at > ?", Time.now - 1.send(verification_rule.timeframe)).
         where(:aasm_state => "committed")
 
-      p *transactions
-
       if transactions.sum(:amount) + amount >= verification_rule.amount
-        p "EXCEEDS LIMIT"
         verifications << Verification.new(:kind => verification_rule.kind)
       end
     end

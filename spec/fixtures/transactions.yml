@@ -4,6 +4,7 @@ t1:
   user_id: 1
   address: foobar
   amount: 15
+  aasm_state: new
 
 # simple transaction with one verified verification
 t2:
@@ -11,6 +12,7 @@ t2:
   user_id: 1
   address: foobar
   amount: 15
+  aasm_state: verified
 
 # transaction with multiple verifications, none unverified
 t3:
@@ -18,6 +20,7 @@ t3:
   user_id: 1
   address: foobar
   amount: 25
+  aasm_state: new
 
 # transaction with multiple verifications, some unverified
 t4:
@@ -25,6 +28,7 @@ t4:
   user_id: 1
   address: foobar
   amount: 25
+  aasm_state: new
 
 # transaction with multiple verifications, all unverified
 t5:
@@ -32,6 +36,7 @@ t5:
   user_id: 1
   address: foobar
   amount: 25
+  aasm_state: new
 
 # transaction without verifications
 t6:
@@ -39,3 +44,4 @@ t6:
   user_id: 1
   address: foobar
   amount: 5
+  aasm_state: verified
