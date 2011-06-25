@@ -30,7 +30,7 @@ class AddressesController < ApplicationController
         return redirect_to account_path
       end
     else
-      address = current_user.getnewaddress
+      address = current_user.newaddress
       @address = Address.new(:user => current_user,
                              :address => address,
                              :label => params[:address][:label],
