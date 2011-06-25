@@ -8,6 +8,10 @@ describe User do
     Kernel.silence_warnings { BITCOIN = mock(:bitcoin) }
     @user = users(:u1)
     @user_data = {:email => "test2@example.com", :password => "password", :password_confirmation => "password"}
+
+    GPGME.check_version({})
+    ctx = GPGME::Ctx.new
+    ctx.keys.each {|k| ctx.delete_key(k, true)}
   end
 
   it "should not create a new user when email/account exists" do
@@ -30,9 +34,18 @@ describe User do
       u.save.should == true
     end
 
+    it "should not create a gpg key for new user if disabled" do
+      u = User.new(@user_data)
+      u.settings = {"encrypt_keys" => false}
 
-    it "should create a gpg key for new user" do
-      u = User.create(@user_data)
+      u.save.should == true
+      u.get_gpg_ctx.keys(u.email).size.should == 0
+    end
+
+    it "should create a gpg key for new user if enabled" do
+      u = User.new(@user_data)
+      u.settings = {:encrypt_keys => true}
+      u.save.should == true
       u.get_gpg_ctx.keys(u.email).size.should == 1
     end
 

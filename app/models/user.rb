@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   DEFAULT_SETTINGS = {
     :language => "en",
     :units => "BTC",
+    :encrypt_keys => true,
   }
 
   LANGUAGES = [
@@ -36,6 +37,7 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me
 
   validate :check_bitcoin_account
+  validate :check_gpg_key
   validate :check_address_not_changed
   after_create :create_gpg_key, :create_bitcoin_address, :create_settings
   before_update :check_password_changed
@@ -50,12 +52,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def check_gpg_key
+    if new_record? && get_gpg_ctx.keys(email).any?
+      errors.add("email", :taken)
+      return false
+    end
+  end
+
   def get_gpg_ctx
     GPGME.check_version({})
     GPGME::Ctx.new
   end
 
   def create_gpg_key
+    return nil  unless encrypt_keys?
     ctx = get_gpg_ctx
     return false  if ctx.keys(email).any?
     config = WeBTC::Application.config.gpg
@@ -74,6 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def remove_gpg_key
+    return nil  unless encrypt_keys?
     ctx = get_gpg_ctx
     key = ctx.keys(email).first
     ctx.delete_key(key, true)
@@ -99,7 +110,7 @@ class User < ActiveRecord::Base
   end
 
   def setting(setting)
-    if settings && settings[setting.to_s]
+    if settings && settings.keys.include?(setting.to_s)
       settings[setting.to_s]
     else
       DEFAULT_SETTINGS[setting.to_sym]
@@ -115,6 +126,7 @@ class User < ActiveRecord::Base
   end
   
   def unload_keys
+    return nil  unless encrypt_keys?
     BITCOIN.getaddressesbyaccount(email).each do |addr|
       address = Address.get(addr)
       address.user = self
@@ -124,6 +136,7 @@ class User < ActiveRecord::Base
   end
 
   def load_keys(password)
+    return nil  unless encrypt_keys?
     addresses.local(self).each do |address|
       address.load(password)
     end
@@ -149,6 +162,10 @@ class User < ActiveRecord::Base
 
   def newaddress
     BITCOIN.getnewaddress(email)
+  end
+
+  def encrypt_keys?
+    setting(:encrypt_keys) && WeBTC::Application.config.bitcoin[:encrypt_keys]
   end
 
 end

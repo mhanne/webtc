@@ -43,6 +43,13 @@ module WeBTC
 
     config.donation_address = "mv5di1FgGEtnStni3KfDW5uwyneaaF7RQD"
 
+    config.bitcoin = {
+      :url => "http://localhost:8332/",
+      :username => "test",
+      :password => "test",
+      :encrypt_keys => false,
+    }
+
     config.gpg = {
       :home => File.join(Rails.root, ".gpg"),
       :key_type => "DSA",
@@ -63,8 +70,4 @@ module WeBTC
   end
 end
 
-BITCOIN = Bitcoin::Client.new({
-  :url => "http://localhost:8332/",
-  :username => "test",
-  :password => "test"
-})
+BITCOIN = Bitcoin::Client.new(WeBTC::Application.config.bitcoin)

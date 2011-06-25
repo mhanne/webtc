@@ -194,3 +194,4 @@ Devise.setup do |config|
 end
 
 require File.join(Rails.root, "app", "controllers", "sessions_controller")
+require File.join(Rails.root, "app", "controllers", "registrations_controller")

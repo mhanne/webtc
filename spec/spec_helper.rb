@@ -25,3 +25,6 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 end
+
+WeBTC::Application.config.bitcoin[:encrypt_keys] = true
+ENV["GNUPGHOME"] = WeBTC::Application.config.gpg[:home] + "-test"

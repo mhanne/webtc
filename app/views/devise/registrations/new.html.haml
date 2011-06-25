@@ -7,16 +7,37 @@
       %th= f.label :email, t('accounts.user.email')
       %td= f.email_field :email
       %td.help= t('accounts.sign_up.help.email')
+      
 
     %tr
       %th= f.label :password, t('accounts.user.password')
       %td= f.password_field :password
-      %td.help= t('accounts.sign_up.help.password').html_safe
+      %td.help= t('accounts.sign_up.help.password')
 
     %tr
       %th= f.label :password_confirmation, t('accounts.user.password_confirmation')
       %td= f.password_field :password_confirmation
       %td.help= t('accounts.sign_up.help.password_confirmation')
+
+    %tr
+      %th= t('accounts.settings.language')
+      %td= select_tag "settings[language]", options_for_select(User::LANGUAGES, User::DEFAULT_SETTINGS[:language])
+      %td.help= t('accounts.sign_up.help.language')
+
+    %tr
+      %th= t('accounts.settings.units')
+      %td= select_tag "settings[units]", options_for_select(User::UNITS.keys.map{|u| [u, u]}, User::DEFAULT_SETTINGS[:units])
+      %td.help= t('accounts.sign_up.help.units')
+      
+    - if WeBTC::Application.config.bitcoin[:encrypt_keys]
+      %tr
+        %th= t('accounts.settings.encrypt_keys')
+        %td{:style => "text-align: left"}
+          = check_box :settings, :encrypt_keys, :checked => true
+          = t('accounts.settings.text_encrypt_keys')
+        %td.help= t('accounts.sign_up.help.encrypt_keys').html_safe
+    - else
+      = hidden_field :settings, :encrypt_keys, :value => "0"
       
     %tr
       %th

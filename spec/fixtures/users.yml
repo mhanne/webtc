@@ -4,4 +4,5 @@ u1:
   settings:
     language: en
     units: mBTC
+    encrypt_keys: false
   keys_loaded: true

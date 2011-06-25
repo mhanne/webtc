@@ -68,11 +68,14 @@ de:
       button: Registrieren
       help:
         email: Ihre E-Mail Adresse
-        password: |-
-                  ACHTUNG! Da wir Ihr Passwort nicht speichern und Ihre privaten Bitcoin-Schlüssel damit gesichert sind,<br/>
-                  können wir das Passwort NICHT zurücksetzen!!! <span style="color: red">Vergessen Sie Ihr Passwort Nicht!</span>
+        password: Wählen Sie ein sicheres passwort
         password_confirmation: Wiederholung des Passworts zur Vermeidung von Tippfehlern
-
+        language: Wählen Sie Ihre Sprache
+        units: Alle Beträge in dieser Einheit anzeigen und interpretieren
+        encrypt_keys: |-
+                  Private Bitcoin-Keys verschlüsselt speichern.<br/>
+                  <b>ACHTUNG!</b> Es ist nur mit Ihrem Passwort möglich, diese Keys wieder zu entschlüsseln!<br/>
+                  <b>Vergessen Sie Ihr Passwort Nicht!!!</b>
     sign_in:
       title: Login
       button: Login
@@ -103,6 +106,8 @@ de:
       title: Einstellungen
       language: Sprache
       units: Einheiten
+      encrypt_keys: Keys verschlüsseln
+      text_encrypt_keys: Bitcoin-Keys verschlüsselt speichern
       save: Speichern
       notice: Einstellungen gespeichert.
       alert: Fehler beim speichern der Einstellungen.
@@ -194,6 +199,7 @@ de:
       last_login: Letzter Login
       ip: IP
       addresses: Adressen
+      transactions: Transaktionen
       balance: Guthaben
       local_addresses: Empfangs-Adressen
       remote_addresses: Sende-Adressen
