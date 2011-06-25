@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
               ]
   
   UNITS = {
-    "BTC"  => 10000000,
+    "BTC"  => 100000000,
     "mBTC" => 100000,
     "uBTC" => 100,
     "satoshi" => 1,
