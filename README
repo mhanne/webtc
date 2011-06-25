@@ -1,7 +1,6 @@
 == WeBTC
 
-This is a bitcoin online-wallet application based on the
-bitcoind RPC API.
+This is a bitcoin online-wallet application based on the bitcoind RPC API.
 
 == Requirements
 
@@ -23,13 +22,16 @@ bitcoind RPC API.
 
 == Key encryption
 
-Every user has a GPG key secured with his account password.
-When a user signs out, all his bitcoin private keys are encrypted to this GPG key
+Every user may have a GPG key secured with his account password.
+When the user signs out, all his bitcoin private keys are encrypted to this GPG key
 and then removed from bitcoind.
 When the user signs in again, he gives his password, the keys are decrypted and
 loaded into bitcoind.
 This way an attacker who compromised the server only has access to the currently
 logged in users' money.
+
+This can be enabled globally in config/application.rb (because it requires a patched
+bitcoind) or as a user setting (because it makes password recovery impossible).
 
 For this to work, you need a bitcoind that supports dumping, loading and removing
 private keys. For the time being you have to use the 'showwallet' and 'removeprivkey'
@@ -40,10 +42,10 @@ branches from my git repo (git://github.com/mhanne/bitcoin.git).
 There are different kinds of verifications, all have in common that they generate a
 code, store a salted hash, and send it to the user through a specified delivery method.
 Delivery methods can be email, SMS, Jabber, whatever.. (only email yet).
-A user can define rules which specifiy an amount, a time frame and a method with which
-to verify each transaction that exceeds the defined amount in the given timeframe.
-When a transaction is created, verifications are created and codes sent out, the user
-then has to enter the codes on the transaction confirmation page.
+A user can define rules which specifiy an amount, a time frame and a verification method.
+Each transaction exceeding the amount in the given timeframe needs to be verified with
+the defined method. Codes are sent to the user and they must be entered on a confirmation
+page before the transaction is sent to bitcoind.
 There are also two special kinds of verifications:
 "Confirm" only displays the confirmation page, but provides the code in a hidden form field.
 "Deny" throws away the code so it can never be verified; to be used for hard limits.
@@ -53,11 +55,26 @@ There are also two special kinds of verifications:
 Install ruby 1.9 via your distribution, RVM or from source.
 Install development libraries for your database.
 Run `bundle install` to install all ruby libraries.
+Edit config/database.yml (if you don't use sqlite3)
 Run `rake db:migrate` to setup the database.
 Edit config/application.rb and configure your bitcoind connection.
 Create .gpg/ folder with chmod 700
 Run `rails s` to start the webserver.
 Open your browser at http://localhost:3000/
+
+== Tests
+
+To run the tests, make sure you have a test database configured and the schema loaded.
+
+ rake db:test:prepare
+
+Then you can run either the whole test suite
+
+ rake spec
+
+or individual tests with
+
+ spec spec/controllers/transactions_controller_spec.rb
 
 == License
 
