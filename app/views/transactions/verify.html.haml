@@ -1,7 +1,7 @@
 = form_tag(verify_transaction_path(@transaction)) do
   = t('.text',
     :amount => display_amount(@transaction.amount),
-    :in_words => amount_in_words(@transaction.amount / current_user.unit_factor),
+    :in_words => amount_in_words(@transaction.amount.to_f / current_user.unit_factor),
     :unit => current_user.setting(:units),
     :address => display_address(Address.get(@transaction.address))).html_safe
 
