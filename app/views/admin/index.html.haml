@@ -5,6 +5,7 @@
     %th= t('admin.user.last_login')
     %th= t('admin.user.ip')
     %th= t('admin.user.addresses')
+    %th= t('admin.user.transactions')
     %th= t('admin.user.balance')
   - @users.each do |user|
     %tr
@@ -13,7 +14,8 @@
       %td= user.current_sign_in_at || user.last_sign_in_at
       %td= user.current_sign_in_ip || user.last_sign_in_ip
       %td= user.addresses.count
-      %td.amount= display_amount BITCOIN.getbalance(user.email)
+      %td= user.transactions.count
+      %td.amount= display_amount user.balance
     %tr
       %td{:colspan => 3}
         %table
