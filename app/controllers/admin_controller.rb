@@ -10,6 +10,7 @@ class AdminController < ApplicationController
   def show
     @user = User.find(params[:id])
     @addresses = @user.addresses
+    @transactions = @user.listtransactions(100).reverse
     @page_title = t('admin.show.title', :email => @user.email)
   end
 

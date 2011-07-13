@@ -14,3 +14,5 @@
 .address_table
   %h3= t('admin.user.remote_addresses')
   = render :partial => "addresses/addresses", :object => Address.remote(@user)
+
+= render :partial => "transactions/transactions", :object => @transactions
