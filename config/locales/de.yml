@@ -208,7 +208,7 @@ de:
     version: "Version: %{version}"
     blocks: "Blöcke: %{blocks}"
     connections: "Verbindungen: %{connections}"
-    balance: "Guthaben: %{balance}"
+    balance: "Guthaben: %{balance} %{unit}"
     testnet: TESTNET
     
 

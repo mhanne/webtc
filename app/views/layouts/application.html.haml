@@ -56,7 +56,11 @@
         %span.version #{t('footer.version', :version => @info["version"])} ||
         %span.blocks #{t('footer.blocks', :blocks => @info["blocks"])} ||
         %span.connections #{t('footer.connections', :connections => @info["connections"])} ||
-        %span.balance #{t('footer.balance', :balance => display_amount(@info["balance"]))} ||
+        %span.balance
+          = t('footer.balance',
+            :unit => (current_user.setting(:units) rescue "BTC"),
+            :balance => display_amount(@info["balance"] * 1e8))
+          ||
         - if @info["testnet"]
           %span.testnet
             %b TESTNET

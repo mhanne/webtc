@@ -215,7 +215,7 @@ en:
     version: "Version: %{version}"
     blocks: "Blocks: %{blocks}"
     connections: "Connections: %{connections}"
-    balance: "Balance: %{balance}"
+    balance: "Balance: %{balance} %{unit}"
     testnet: TESTNET
     
 
