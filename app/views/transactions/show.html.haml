@@ -2,8 +2,8 @@
 
 %table
   %tr
-    %th= t('activerecord.models.transaction.from')
-    %td= @from ? display_address(@from) : "-"
+    %th= t('activerecord.models.transaction.type')
+    %td= @type
 
     %th= t('activerecord.models.transaction.to')
     %td= @to ? display_address(@to) : "-"

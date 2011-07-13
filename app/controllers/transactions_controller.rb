@@ -12,11 +12,14 @@ class TransactionsController < ApplicationController
 
   def show
     @transaction = Transaction.get(params[:id])
-    unless @transaction["details"].map{|d| d["account"]}.include?(current_user.email)
-      return redirect_to destroy_user_session_path
+    if current_user.is_admin?
+      details = @transaction["details"].first
+    else
+      details = @transaction["details"].find {|d| d["account"] == current_user.email}
     end
-    @from = Address.get(@transaction["details"].find{|d| d["category"] == "send" }["address"]) rescue nil
-    @to = Address.get(@transaction["details"].find{|d| d["category"] == "receive" }["address"]) rescue nil
+    return redirect_to destroy_user_session_path  unless details
+    @type = details["category"]
+    @to = Address.get(details["address"])
     @page_title = t('transactions.show.title')
   end
 
