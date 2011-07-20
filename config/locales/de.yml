@@ -154,6 +154,15 @@ de:
     commit:
       notice: "%{amount} BTC an %{address} gesendet."
       alert: "Fehler: %{error}."
+    import:
+      title: Transaktion importieren
+      text: Hier koennen Sie eine exportierte Offline-Transaktion importieren und sie wird ins Netzwerk ausgesandt.
+      file: Transaktions-Datei hochladen
+      submit_file: Hochladen
+      raw: Rohe Transaktion Eingeben
+      submit_raw: Importieren
+      notice: "Transaktion %{txid} wurde erfolgreich importiert."
+
 
   verification_rules:
     index:

@@ -159,6 +159,15 @@ en:
     commit:
       notice: "You sent %{unit} %{amount} to %{address}."
       alert: "Error committing transaction: %{error}."
+    import:
+      title: Import transaction
+      text: Here you can import an exported offline transaction and it will get broadcasted to the network.
+      file: Upload Transaction File
+      submit_file: Upload
+      raw: Enter Raw Transaction
+      submit_raw: Import
+      notice: "Successfully imported transaction %{txid}."
+
 
   verification_rules:
     index:

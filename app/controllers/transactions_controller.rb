@@ -1,6 +1,6 @@
 class TransactionsController < ApplicationController
   
-  before_filter :authenticate_user!, :check_bitcoin_keys
+  before_filter :authenticate_user!, :check_bitcoin_keys, :except => [:upload, :import]
 
   include ApplicationHelper
   
@@ -105,5 +105,24 @@ class TransactionsController < ApplicationController
     
   end
 
+  def import
+    if params[:transaction]
+      rawtransaction = params[:transaction][:raw]  if params[:transaction][:raw]
+      rawtransaction = params[:transaction][:file].read  if params[:transaction][:file]
+    end
+    if rawtransaction
+      txid = BITCOIN.importtransaction rawtransaction
+      if txid
+        broadcast_transaction = BroadcastTransaction.find_or_create_by_txid(txid)
+        broadcast_transaction.rawtransaction = rawtransaction
+        broadcast_transaction.broadcasted_at = Time.now
+        broadcast_transaction.tries += 1
+        broadcast_transaction.save
+        flash[:notice] = t('transactions.import.notice', :txid => txid)
+        redirect_to import_transaction_path
+      end
+    end
+    @page_title = t('transactions.import.title')
+  end
 
 end

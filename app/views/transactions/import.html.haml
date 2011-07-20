@@ -1,0 +1,19 @@
+= t('transactions.import.text')
+%br/
+%br/
+
+= form_tag(import_transaction_path, :multipart => true) do
+  = label :transaction, :file, t('transactions.import.file')
+  %br/
+  = file_field :transaction, :file
+  %br/
+  = submit_tag t('transactions.import.submit_file')
+%br/
+
+= form_tag(import_transaction_path) do
+  = label :transaction, :raw, t('transactions.import.raw')
+  %br/
+  = text_area :transaction, :raw, :size => "100x10"
+  %br/
+  = submit_tag t('transactions.import.submit_raw')
+

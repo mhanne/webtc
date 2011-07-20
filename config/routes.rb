@@ -15,6 +15,7 @@ WeBTC::Application.routes.draw do
   match 'transactions/verify/:id/:code' => 'transactions#verify', :as => :verify_transaction
   match 'transactions/verify/:id' => 'transactions#verify', :as => :verify_transaction
   match 'transactions/commit/:id' => 'transactions#commit', :as => :commit_transaction
+  match 'transactions/import' => 'transactions#import', :as => :import_transaction
   resources :transactions
   resources :verification_rules
 
